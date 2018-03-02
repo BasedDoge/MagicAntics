@@ -22,7 +22,8 @@ public class SpellSelecting implements Listener {
         if (MAIR.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
             if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 e.setCancelled(true);
-                ItemStack spellTome = e.getPlayer().getInventory().getItemInMainHand();
+                Player p = e.getPlayer();
+                ItemStack spellTome = p.getInventory().getItemInMainHand();
                 ItemMeta spellTomeMeta = spellTome.getItemMeta();
 
                 String activeSpell = findSpellInLore(e.getPlayer(), spellTome);
@@ -30,7 +31,13 @@ public class SpellSelecting implements Listener {
                 spellTomelore.set(0, ChatColor.DARK_GRAY + "Active#" + activeSpell);
                 spellTomeMeta.setLore(spellTomelore);
                 spellTome.setItemMeta(spellTomeMeta);
-                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1f);
+                
+                p.sendTitle("", ChatColor.STRIKETHROUGH + "--"
+                            + ChatColor.BOLD + ">"
+                            + ChatColor.RESET + "  "
+                            + ChatColor.ITALIC
+                            + activeSpell, 10, 20, 10);
+                p.playSound(e.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1f);
             }
         }
     }
