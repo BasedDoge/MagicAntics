@@ -26,7 +26,7 @@ import org.bukkit.plugin.Plugin;
 public class SpellCasting implements Listener {
 
     Plugin plugin;
-    int cooldownTime = 10;
+    int cooldownTime = 5;
     ItemRules MAIR = new ItemRules();
     HashMap<UUID, HashMap<String, Long>> playerCooldown = new HashMap<>(); //String = player, hashmap = <spell name, time in milliseconds since last cast>
 
@@ -92,7 +92,7 @@ public class SpellCasting implements Listener {
             case "Ice Bolt":
                 Snowball iceBolt = p.launchProjectile(Snowball.class);
                 iceBolt.setShooter(p);
-                iceBolt.setMetadata("MagicAntics", new FixedMetadataValue(plugin, "IceBolt"));
+                iceBolt.setMetadata("IceBolt", new FixedMetadataValue(plugin, "MagicAntics"));
                 iceBolt.setVelocity(p.getLocation().getDirection().multiply(2));
                 p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
                 break;

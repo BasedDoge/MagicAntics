@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import spells.ProjectileEffects;
 
 public class MagicAnticsMain extends JavaPlugin {
 
@@ -25,6 +26,7 @@ public class MagicAnticsMain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(MASpells, this);
         getServer().getPluginManager().registerEvents(new SpellCombining(), this);
         getServer().getPluginManager().registerEvents(new SpellSelecting(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileEffects(), this);
         MASpells.setPlugin(this);
 
         //remove these
