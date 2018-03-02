@@ -23,7 +23,6 @@ public class ProjectileEffects implements Listener {
                 PotionEffect slow = new PotionEffect(PotionEffectType.SLOW, 60, 1, true);
                 slow.apply((LivingEntity) e.getHitEntity());
             }
-
         }
 
     }

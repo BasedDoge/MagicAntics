@@ -35,7 +35,7 @@ public class SpellCombining implements Listener {
                     tomeSpellsList.add(spellSheetMeta.getLore().get(0));
                 } else if (spellSheetMeta.getLore().size() > 0) {   //as above
                     tomeSpellsList.add(spellSheetMeta.getLore().get(0));
-                
+
                 }
                 spellSheet.setAmount(spellSheet.getAmount() - 1); //removes a single sheet from the stack now
                 spellTomeMeta.setLore(tomeSpellsList);

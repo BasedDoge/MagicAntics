@@ -28,7 +28,9 @@ public class SpellCasting implements Listener {
     Plugin plugin;
     int cooldownTime = 5;
     ItemRules MAIR = new ItemRules();
-    HashMap<UUID, HashMap<String, Long>> playerCooldown = new HashMap<>(); //String = player, hashmap = <spell name, time in milliseconds since last cast>
+    
+    //String = player, hashmap = <spell name, time in milliseconds since last cast>
+    HashMap<UUID, HashMap<String, Long>> playerCooldown = new HashMap<>(); 
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCast(PlayerInteractEvent e) {
@@ -47,25 +49,23 @@ public class SpellCasting implements Listener {
                 }
 
                 Long lastUseTime = (long) 0;
-                
+
                 //if the spell has been cast before (if a cooldown time exists)
-                if(playerCooldown.containsKey(p.getUniqueId()) && playerCooldown.get(p.getUniqueId()).containsKey(activeSpell)){
+                if (playerCooldown.containsKey(p.getUniqueId()) && playerCooldown.get(p.getUniqueId()).containsKey(activeSpell)) {
                     lastUseTime = playerCooldown.get(p.getUniqueId()).get(activeSpell);
                 }
-                
+
                 //make sure hashmap has an entry for the player to avoid NPEs
-                    HashMap<String, Long> spellCooldown = new HashMap<>();
-                    spellCooldown.put(activeSpell, lastUseTime);
-                    playerCooldown.put(p.getUniqueId(), spellCooldown);
-                    
+                HashMap<String, Long> spellCooldown = new HashMap<>();
+                spellCooldown.put(activeSpell, lastUseTime);
+                playerCooldown.put(p.getUniqueId(), spellCooldown);
+
                 //if the player is not on cooldown
                 if (currentTime - lastUseTime > cooldownTime) {
                     castSpell(activeSpell, p);
                     spellCooldown.put(activeSpell, currentTime);
                     playerCooldown.put(p.getUniqueId(), spellCooldown);
-                }
-                
-                //if the player is still on cooldown
+                } //if the player is still on cooldown
                 else if (currentTime - lastUseTime < cooldownTime) {
                     p.sendMessage("your spells are on cooldown for " + (cooldownTime - (currentTime - lastUseTime)) + " more seconds");
                 }
@@ -75,13 +75,13 @@ public class SpellCasting implements Listener {
     }
 
     public void castSpell(String spell, Player p) {
-        switch (spell) { //switch statement likely isn't the best way to store all spells maybe move them to another class
+        //switch statement likely isn't the best way to store all spells maybe move them to another class/es
+        switch (spell) { 
 
             case "":
                 break;
 
             case "FireBall":
-
                 SmallFireball fireblast = p.launchProjectile(SmallFireball.class);
                 fireblast.setShooter(p);
                 fireblast.setIsIncendiary(false);

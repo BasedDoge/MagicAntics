@@ -31,12 +31,12 @@ public class SpellSelecting implements Listener {
                 spellTomelore.set(0, ChatColor.DARK_GRAY + "Active#" + activeSpell);
                 spellTomeMeta.setLore(spellTomelore);
                 spellTome.setItemMeta(spellTomeMeta);
-                
+
                 p.sendTitle("", ChatColor.STRIKETHROUGH + "--"
-                            + ChatColor.BOLD + ">"
-                            + ChatColor.RESET + "  "
-                            + ChatColor.ITALIC
-                            + activeSpell, 10, 20, 10);
+                        + ChatColor.BOLD + ">"
+                        + ChatColor.RESET + "  "
+                        + ChatColor.ITALIC
+                        + activeSpell, 10, 20, 10);
                 p.playSound(e.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1f);
             }
         }
