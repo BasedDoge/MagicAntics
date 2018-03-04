@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.plugin;
 
+import net.undergroundantics.magicantics.spells.Spell;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,11 +43,11 @@ public class ItemRules {
         return isSpell;
     }
 
-    public static ItemStack newSpellSheet(String lore) {
+    public static ItemStack newSpellSheet(Spell spell) {
         ItemStack spellSheet = new ItemStack(Material.PAPER, 1);
         ItemMeta meta = spellSheet.getItemMeta();
         meta.setDisplayName(ChatColor.RESET + "Incantation");
-        meta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', lore)));
+        meta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', spell.getDisplayName())));
         meta.addEnchant(Enchantment.MENDING, 1, true);
         meta.addItemFlags(HIDE_POTION_EFFECTS);
         meta.addItemFlags(HIDE_ENCHANTS);

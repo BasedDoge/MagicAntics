@@ -38,7 +38,7 @@ public class MagicAntics extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        MagicAnticsCommandExecutor ce = new MagicAnticsCommandExecutor();
+        MagicAnticsCommandExecutor ce = new MagicAnticsCommandExecutor(this);
         CommandTabComplete tc = new CommandTabComplete(this);
         getServer().getPluginManager().registerEvents(new SpellCasting(this), this);
         getServer().getPluginManager().registerEvents(new SpellCombining(), this);
