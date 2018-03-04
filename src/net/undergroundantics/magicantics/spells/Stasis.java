@@ -41,6 +41,7 @@ public class Stasis implements Spell {
             if (e instanceof LivingEntity) {
                 ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
                 stasisProj.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
+                stasisProj.setVelocity(stasisProj.getVelocity().multiply(2));
                 stasisProj.setShooter(p);
                 stasisProj.setTarget(e);
                 stasisProj.setBounce(true);
