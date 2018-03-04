@@ -1,10 +1,10 @@
-package spells;
+package net.undergroundantics.magicantics.spells;
 
-import main.ItemRules;
+import net.undergroundantics.magicantics.plugin.ItemRules;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import main.MagicAnticsMain;
+import net.undergroundantics.magicantics.plugin.MagicAntics;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import static org.bukkit.Bukkit.getServer;
@@ -41,7 +41,7 @@ public class SpellCasting implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onCast(PlayerInteractEvent e) {
         try{
-         plugin = MagicAnticsMain.getInstance();
+         plugin = MagicAntics.getInstance();
         }catch(Exception ex){
             getServer().getConsoleSender().sendMessage(ex.getMessage());
         }

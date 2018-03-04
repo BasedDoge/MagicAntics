@@ -1,6 +1,6 @@
-package spells;
+package net.undergroundantics.magicantics.spells;
 
-import main.MagicAnticsMain;
+import net.undergroundantics.magicantics.plugin.MagicAntics;
 import org.bukkit.Bukkit;
 import static org.bukkit.Bukkit.getServer;
 import org.bukkit.EntityEffect;
@@ -23,7 +23,7 @@ public class ProjectileEffects implements Listener {
     @EventHandler
     public void onHit(ProjectileHitEvent e) {
         try{
-            plugin = MagicAnticsMain.getInstance();
+            plugin = MagicAntics.getInstance();
         }catch(Exception ex){
             getServer().getConsoleSender().sendMessage(ex.getMessage());
         }

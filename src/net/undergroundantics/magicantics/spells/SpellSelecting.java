@@ -1,6 +1,6 @@
-package spells;
+package net.undergroundantics.magicantics.spells;
 
-import main.ItemRules;
+import net.undergroundantics.magicantics.plugin.ItemRules;
 import java.util.List;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Sound;

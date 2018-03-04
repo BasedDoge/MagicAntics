@@ -1,4 +1,4 @@
-package main;
+package net.undergroundantics.magicantics.plugin;
 
 import java.util.Arrays;
 import org.bukkit.ChatColor;
