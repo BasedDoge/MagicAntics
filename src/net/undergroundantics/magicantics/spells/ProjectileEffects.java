@@ -28,7 +28,7 @@ public class ProjectileEffects implements Listener {
             getServer().getConsoleSender().sendMessage(ex.getMessage());
         }
         
-        if (e.getEntity().hasMetadata("IceBolt")) {
+        if (e.getEntity().hasMetadata("Icicle")) {
             Entity p = e.getEntity();
             p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 10, 0.2, 0.2, 0.2, 0.2);
             p.getWorld().playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS, 0.5f, 2.0f);

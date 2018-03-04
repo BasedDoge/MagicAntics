@@ -103,10 +103,10 @@ public class SpellCasting implements Listener {
                 break;
 
             case "Icicle":
-                Snowball iceBolt = p.launchProjectile(Snowball.class);
-                iceBolt.setShooter(p);
-                iceBolt.setMetadata("IceBolt", new FixedMetadataValue(plugin, "MagicAntics"));
-                iceBolt.setVelocity(p.getLocation().getDirection().multiply(3));
+                Snowball icicle = p.launchProjectile(Snowball.class);
+                icicle.setShooter(p);
+                icicle.setMetadata("Icicle", new FixedMetadataValue(plugin, "MagicAntics"));
+                icicle.setVelocity(p.getLocation().getDirection().multiply(3));
                 p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
                 break;
                 
