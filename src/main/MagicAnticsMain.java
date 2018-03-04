@@ -6,6 +6,8 @@ import spells.SpellSelecting;
 import spells.SpellCasting;
 import spells.SpellCombining;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,9 +22,9 @@ import spells.ProjectileEffects;
 
 public class MagicAnticsMain extends JavaPlugin {
     
-    private static Plugin instance;
+    private static Plugin instance = null;
 
-    public void MagicAnticsPlugin() throws Exception {
+    public void MagicAnticsMain() throws Exception {
         if (instance == null) {
             instance = this;
         } else {
@@ -40,6 +42,11 @@ public class MagicAnticsMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        try {
+            getInstance();
+        } catch (Exception ex) {
+            Logger.getLogger(MagicAnticsMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
         MagicAnticsCommandExecutor ce = new MagicAnticsCommandExecutor();
         CommandTabComplete tc = new CommandTabComplete();
         getServer().getPluginManager().registerEvents(new SpellCasting(), this);
