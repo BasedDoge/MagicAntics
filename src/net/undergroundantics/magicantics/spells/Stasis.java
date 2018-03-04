@@ -50,14 +50,14 @@ public class Stasis implements Spell {
         p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10, 1, 1, 1, 0);
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         if (e.getHitEntity() instanceof LivingEntity) {
-            PotionEffect lev = new PotionEffect(PotionEffectType.LEVITATION, 1, 1, true);
-            for (int i = 0; i < 100; i++){
+            PotionEffect lev = new PotionEffect(PotionEffectType.LEVITATION, 20, 1, true);
+            for (int i = 0; i < 60; i++){
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     public void run() {
                         lev.apply((LivingEntity) e.getHitEntity());
                         e.getHitEntity().playEffect(EntityEffect.HURT);
                     }
-                }, 1);
+                }, i);
             }
         }
     }
