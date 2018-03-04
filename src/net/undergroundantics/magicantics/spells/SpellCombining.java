@@ -16,12 +16,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class SpellCombining implements Listener {
 
-    ItemRules MAIR = new ItemRules();
-
     @EventHandler(priority = EventPriority.HIGH)
     public void addSpellToTome(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (MAIR.SpellTomeCheck(e.getPlayer().getInventory().getItemInOffHand()) && MAIR.SpellSheetCheck(e.getPlayer().getInventory().getItemInMainHand())) {
+            if (ItemRules.SpellTomeCheck(e.getPlayer().getInventory().getItemInOffHand()) && ItemRules.SpellSheetCheck(e.getPlayer().getInventory().getItemInMainHand())) {
                 e.setCancelled(true);
 
                 ItemStack spellTome = e.getPlayer().getInventory().getItemInOffHand();

@@ -15,11 +15,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class SpellSelecting implements Listener {
 
-    ItemRules MAIR = new ItemRules();
-
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChangeActiveSpell(PlayerInteractEvent e) {
-        if (MAIR.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
+        if (ItemRules.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
             if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 e.setCancelled(true);
                 Player p = e.getPlayer();

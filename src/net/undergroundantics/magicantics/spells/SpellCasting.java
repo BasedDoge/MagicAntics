@@ -1,53 +1,25 @@
 package net.undergroundantics.magicantics.spells;
 
-import net.undergroundantics.magicantics.plugin.ItemRules;
+import net.undergroundantics.magicantics.plugin.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
-import net.undergroundantics.magicantics.plugin.MagicAntics;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import static org.bukkit.Bukkit.getServer;
-import static org.bukkit.Bukkit.spigot;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SmallFireball;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class SpellCasting implements Listener {
 
-    Plugin plugin;
-    
-    int cooldownTime = 5;
-    ItemRules MAIR = new ItemRules();
-    
-    //String = player, hashmap = <spell name, time in milliseconds since last cast>
-    HashMap<UUID, HashMap<String, Long>> playerCooldown = new HashMap<>(); 
+    public SpellCasting(MagicAntics plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCast(PlayerInteractEvent e) {
-        try{
-         plugin = MagicAntics.getInstance();
-        }catch(Exception ex){
-            getServer().getConsoleSender().sendMessage(ex.getMessage());
-        }
-         
-         
-         if (MAIR.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
+        if (ItemRules.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 e.setCancelled(true);
 
@@ -75,7 +47,10 @@ public class SpellCasting implements Listener {
 
                 //if the player is not on cooldown
                 if (currentTime - lastUseTime > cooldownTime) {
-                    castSpell(activeSpell, p);
+                    Spell spell = plugin.getSpell(activeSpell);
+                    if (spell != null) {
+                        spell.cast(p);
+                    }
                     spellCooldown.put(activeSpell, currentTime);
                     playerCooldown.put(p.getUniqueId(), spellCooldown);
                 } //if the player is still on cooldown
@@ -86,73 +61,10 @@ public class SpellCasting implements Listener {
             }
         }
     }
+    
+    //String = player, hashmap = <spell name, time in milliseconds since last cast>
+    private HashMap<UUID, HashMap<String, Long>> playerCooldown = new HashMap<>();
+    private static final int cooldownTime = 5;
+    private final MagicAntics plugin;
 
-    public void castSpell(String spell, Player p) {
-        //switch statement likely isn't the best way to store all spells maybe move them to another class/es
-        switch (spell) { 
-
-            case "":
-                break;
-
-            case "Fireball":
-                SmallFireball fireblast = p.launchProjectile(SmallFireball.class);
-                fireblast.setShooter(p);
-                fireblast.setIsIncendiary(false);
-                fireblast.setVelocity(p.getLocation().getDirection().multiply(2));
-                p.getWorld().spawnParticle(Particle.LAVA, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
-                break;
-
-            case "Icicle":
-                Snowball icicle = p.launchProjectile(Snowball.class);
-                icicle.setShooter(p);
-                icicle.setMetadata("Icicle", new FixedMetadataValue(plugin, "MagicAntics"));
-                icicle.setVelocity(p.getLocation().getDirection().multiply(3));
-                p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
-                break;
-                
-            case "Stasis":
-                LlamaSpit stasisProj = p.launchProjectile(LlamaSpit.class);
-                stasisProj.setShooter(p);
-                stasisProj.setMetadata("Stasis", new FixedMetadataValue(plugin, "MagicAntics"));
-                stasisProj.setVelocity(p.getLocation().getDirection().multiply(3));
-                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
-                break;
-
-            case "Thunderstorm":
-                List<Entity> localMobsStorm = p.getNearbyEntities(6, 2, 6);
-                for (Entity mob : localMobsStorm) {
-                    if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
-                        mob.getWorld().strikeLightning(mob.getLocation().add(0, 1, 0));
-                    }
-                }
-                if (localMobsStorm.size() > 0) {
-                    p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getEyeLocation(), 50, 4, 1, 4, 0);
-                } else {
-                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
-                }
-                break;
-
-            case "Fangs":
-                for (int i = 1; i < 9; i++) {
-                    Location l = p.getLocation().add(p.getLocation().getDirection().setY(0).normalize().multiply(i));
-                    l.setY(l.getWorld().getHighestBlockAt(l).getY());
-                    if (l.getY() >= p.getLocation().getY() - 4 && l.getY() <= p.getLocation().getY() + 4) {
-                        p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
-                    }
-                }
-                break;
-
-            case "Inferno":
-                List<Entity> localMobsInferno = p.getNearbyEntities(6, 2, 6);
-                p.getWorld().spawnParticle(Particle.FLAME, p.getEyeLocation(), 30, 4, 1, 4, 0.2);
-                p.getWorld().spawnParticle(Particle.LAVA, p.getEyeLocation(), 8, 2, 0.5, 2, 0.1);
-                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.PLAYERS, 0.5f, 0.0f);
-                for (Entity mob : localMobsInferno) {
-                    if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
-                        mob.setFireTicks(160);
-                    }
-                }
-                break;
-        }
-    }
 }

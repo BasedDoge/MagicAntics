@@ -1,13 +1,8 @@
 package net.undergroundantics.magicantics.plugin;
 
-import net.undergroundantics.magicantics.commands.CommandTabComplete;
-import net.undergroundantics.magicantics.commands.MagicAnticsCommandExecutor;
-import net.undergroundantics.magicantics.spells.SpellSelecting;
-import net.undergroundantics.magicantics.spells.SpellCasting;
-import net.undergroundantics.magicantics.spells.SpellCombining;
+import net.undergroundantics.magicantics.commands.*;
+import net.undergroundantics.magicantics.spells.*;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,43 +11,39 @@ import static org.bukkit.inventory.ItemFlag.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import net.undergroundantics.magicantics.spells.ProjectileEffects;
+
 
 public class MagicAntics extends JavaPlugin {
-    
-    private static Plugin instance = null;
+ 
+    public static final String NAME = "MagicAntics";
 
-    public void MagicAntics() throws Exception {
-        if (instance == null) {
-            instance = this;
-        } else {
-            throw new Exception("Constructed twice");
-        }
+    public MagicAntics() {
+        super();
+        spells = new Spell[] { new Fangs(), new Fireball(), new Icicle(this), new Inferno(), new Stasis(this), new Thunderstorm() };
     }
 
-    public static Plugin getInstance() throws Exception {
-        if (instance == null) {
-            throw new Exception("Not constructed");
-        } else {
-            return instance;
+    public Spell getSpell(String name) {
+        for (Spell spell : spells) {
+            if (spell.getName().equals(name)) {
+                return spell;
+            }
         }
+        return null;
+    }
+    
+    public Spell[] getSpells() {
+        return spells;
     }
 
     @Override
     public void onEnable() {
-        try {
-            getInstance();
-        } catch (Exception ex) {
-            Logger.getLogger(MagicAntics.class.getName()).log(Level.SEVERE, null, ex);
-        }
         MagicAnticsCommandExecutor ce = new MagicAnticsCommandExecutor();
-        CommandTabComplete tc = new CommandTabComplete();
-        getServer().getPluginManager().registerEvents(new SpellCasting(), this);
+        CommandTabComplete tc = new CommandTabComplete(this);
+        getServer().getPluginManager().registerEvents(new SpellCasting(this), this);
         getServer().getPluginManager().registerEvents(new SpellCombining(), this);
         getServer().getPluginManager().registerEvents(new SpellSelecting(), this);
-        getServer().getPluginManager().registerEvents(new ProjectileEffects(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileEffects(this), this);
         getCommand("NewSpell").setExecutor(ce);
         getCommand("NewSpell").setTabCompleter(tc);
 
@@ -73,4 +64,7 @@ public class MagicAntics extends JavaPlugin {
         tomeRecipe.setIngredient('b', Material.BOOK);
         Bukkit.getServer().addRecipe(tomeRecipe);
     }
+    
+    private final Spell[] spells;
+
 }
