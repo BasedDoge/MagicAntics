@@ -20,7 +20,7 @@ public class Stasis implements Spell {
 
     private static final String NAME = "Stasis";
     private static final String DISPLAY_NAME = "&eStasis";
-    private static final long COOLDOWN = 5;
+    private static final long COOLDOWN = 60;
     
     @Override
     public long getCooldown() {

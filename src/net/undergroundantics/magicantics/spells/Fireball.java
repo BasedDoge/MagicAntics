@@ -9,7 +9,7 @@ public class Fireball implements Spell {
 
     private static final String NAME = "Fireball";
     private static final String DISPLAY_NAME = "&cFireball";
-    private static final long COOLDOWN = 5;
+    private static final long COOLDOWN = 1;
     
     @Override
     public long getCooldown() {
