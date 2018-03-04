@@ -1,7 +1,7 @@
 name: MagicAntics
 main: net.undergroundantics.magicantics.plugin.MagicAntics
 version: 0.2
-authors: Isaac, Dxyze
+authors: [Isaac, Dxyze]
 commands:
    NewSpell:
       description: Gives spells to be added to spellbooks.
