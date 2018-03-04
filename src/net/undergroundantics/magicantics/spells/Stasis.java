@@ -52,6 +52,7 @@ public class Stasis implements Spell {
     @Override
     public void onHit(ProjectileHitEvent e) {
         Entity p = e.getEntity();
+        PotionEffect stasis = new PotionEffect(PotionEffectType.LEVITATION, 20, 2, true);
         p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10, 1, 1, 1, 0);
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         if (e.getHitEntity() instanceof LivingEntity) {
@@ -59,6 +60,7 @@ public class Stasis implements Spell {
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     public void run() {
                         e.getHitEntity().playEffect(EntityEffect.HURT);
+                        stasis.apply((LivingEntity) e.getHitEntity());
                     }
                 }, i);
             }
