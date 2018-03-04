@@ -12,7 +12,7 @@ public class CommandTabComplete implements TabCompleter {
 
     public CommandTabComplete(MagicAntics plugin) {
         for (Spell spell : plugin.getSpells()) {
-            spells.add(spell.getDisplayName());
+            spells.add(spell.getName());
         }
     }
 
@@ -25,6 +25,6 @@ public class CommandTabComplete implements TabCompleter {
         return list;
     }
 
-    private final List<String> spells = new LinkedList<String>();
+    private final List<String> spells = new LinkedList<>();
 
 }
