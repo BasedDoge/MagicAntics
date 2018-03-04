@@ -8,8 +8,8 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ShulkerBullet;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -30,17 +30,22 @@ public class Stasis implements Spell {
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
-    
+
     public Stasis(Plugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public void cast(Player p) {
-        LlamaSpit stasisProj = p.launchProjectile(LlamaSpit.class);
-        stasisProj.setShooter(p);
-        stasisProj.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
-        stasisProj.setVelocity(p.getLocation().getDirection().multiply(3));
+        for (Entity e : p.getNearbyEntities(3, 3, 3)) {
+            if (e instanceof LivingEntity) {
+                ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
+                stasisProj.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
+                stasisProj.setShooter(p);
+                stasisProj.setTarget(e);
+                stasisProj.setBounce(true);
+            }
+        }
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
     }
 
@@ -50,11 +55,9 @@ public class Stasis implements Spell {
         p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10, 1, 1, 1, 0);
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         if (e.getHitEntity() instanceof LivingEntity) {
-            PotionEffect lev = new PotionEffect(PotionEffectType.LEVITATION, 20, 1, true);
-            for (int i = 0; i < 60; i++){
+            for (int i = 0; i < 60; i++) {
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     public void run() {
-                        lev.apply((LivingEntity) e.getHitEntity());
                         e.getHitEntity().playEffect(EntityEffect.HURT);
                     }
                 }, i);
