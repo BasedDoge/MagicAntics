@@ -1,3 +1,10 @@
 name: MagicAntics
 main: main.MagicAnticsMain
 version: 0.2
+author: Isaac
+commands:
+   NewSpell:
+      description: Gives spells to be added to spellbooks.
+      usage: /NewSpell <spell> [Use tab completion]
+      permission: MagicAntics.NewSpell
+      permission-message: You don't have permission to give yourself items.

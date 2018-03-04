@@ -1,16 +1,21 @@
 package main;
 
+import java.util.Arrays;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
+import static org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS;
+import static org.bukkit.inventory.ItemFlag.HIDE_POTION_EFFECTS;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemRules {
 
     /*
-    Used by events to check a player's Itemstack against these rules.
-    This defines what a 'spell tome' is.
-    */
-    
+     Used by events to check a player's Itemstack against these rules.
+     This defines what a 'spell tome' is.
+     */
     public Boolean SpellTomeCheck(ItemStack item) {
         Boolean isSpellTome = false;
         if (item != null) {
@@ -23,11 +28,10 @@ public class ItemRules {
         return isSpellTome;
     }
 
-    
     /*
-    Used by events to check a player's Itemstack against these rules.
-    This defines what a 'Incantation'/'spell sheet' is.
-    */
+     Used by events to check a player's Itemstack against these rules.
+     This defines what a 'Incantation'/'spell sheet' is.
+     */
     public Boolean SpellSheetCheck(ItemStack item) {
         Boolean isSpell = false;
         if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)) {
@@ -36,5 +40,17 @@ public class ItemRules {
             }
         }
         return isSpell;
+    }
+
+    public ItemStack newSpellSheet(String lore) {
+        ItemStack spellSheet = new ItemStack(Material.PAPER, 1);
+        ItemMeta meta = spellSheet.getItemMeta();
+        meta.setDisplayName(ChatColor.RESET + "Incantation");
+        meta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', lore)));
+        meta.addEnchant(Enchantment.MENDING, 1, true);
+        meta.addItemFlags(HIDE_POTION_EFFECTS);
+        meta.addItemFlags(HIDE_ENCHANTS);
+        spellSheet.setItemMeta(meta);
+        return spellSheet;
     }
 }

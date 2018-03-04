@@ -4,7 +4,11 @@ import main.ItemRules;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import main.MagicAnticsMain;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
+import static org.bukkit.Bukkit.getServer;
+import static org.bukkit.Bukkit.spigot;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -12,6 +16,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.Snowball;
@@ -26,6 +31,7 @@ import org.bukkit.plugin.Plugin;
 public class SpellCasting implements Listener {
 
     Plugin plugin;
+    
     int cooldownTime = 5;
     ItemRules MAIR = new ItemRules();
     
@@ -34,7 +40,14 @@ public class SpellCasting implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCast(PlayerInteractEvent e) {
-        if (MAIR.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
+        try{
+         plugin = MagicAnticsMain.getInstance();
+        }catch(Exception ex){
+            getServer().getConsoleSender().sendMessage(ex.getMessage());
+        }
+         
+         
+         if (MAIR.SpellTomeCheck(e.getPlayer().getInventory().getItemInMainHand())) {
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 e.setCancelled(true);
 
@@ -81,7 +94,7 @@ public class SpellCasting implements Listener {
             case "":
                 break;
 
-            case "FireBall":
+            case "Fireball":
                 SmallFireball fireblast = p.launchProjectile(SmallFireball.class);
                 fireblast.setShooter(p);
                 fireblast.setIsIncendiary(false);
@@ -89,15 +102,23 @@ public class SpellCasting implements Listener {
                 p.getWorld().spawnParticle(Particle.LAVA, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
                 break;
 
-            case "Ice Bolt":
+            case "Icicle":
                 Snowball iceBolt = p.launchProjectile(Snowball.class);
                 iceBolt.setShooter(p);
                 iceBolt.setMetadata("IceBolt", new FixedMetadataValue(plugin, "MagicAntics"));
-                iceBolt.setVelocity(p.getLocation().getDirection().multiply(2));
+                iceBolt.setVelocity(p.getLocation().getDirection().multiply(3));
                 p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
                 break;
+                
+            case "Stasis":
+                LlamaSpit stasisProj = p.launchProjectile(LlamaSpit.class);
+                stasisProj.setShooter(p);
+                stasisProj.setMetadata("Stasis", new FixedMetadataValue(plugin, "MagicAntics"));
+                stasisProj.setVelocity(p.getLocation().getDirection().multiply(3));
+                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
+                break;
 
-            case "Lightning Storm":
+            case "Thunderstorm":
                 List<Entity> localMobsStorm = p.getNearbyEntities(6, 2, 6);
                 for (Entity mob : localMobsStorm) {
                     if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
@@ -131,9 +152,5 @@ public class SpellCasting implements Listener {
                 }
                 break;
         }
-    }
-
-    public void setPlugin(Plugin plugin) {
-        this.plugin = plugin;
     }
 }
