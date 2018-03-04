@@ -1,6 +1,6 @@
-package Commands;
+package net.undergroundantics.magicantics.commands;
 
-import main.ItemRules;
+import net.undergroundantics.magicantics.plugin.ItemRules;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package main;
+package net.undergroundantics.magicantics.plugin;
 
 import java.util.Arrays;
 import org.bukkit.ChatColor;
@@ -16,8 +16,8 @@ public class ItemRules {
      Used by events to check a player's Itemstack against these rules.
      This defines what a 'spell tome' is.
      */
-    public Boolean SpellTomeCheck(ItemStack item) {
-        Boolean isSpellTome = false;
+    public static boolean SpellTomeCheck(ItemStack item) {
+        boolean isSpellTome = false;
         if (item != null) {
             if (item.getType() == Material.ENCHANTED_BOOK) {
                 if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)) {
@@ -32,8 +32,8 @@ public class ItemRules {
      Used by events to check a player's Itemstack against these rules.
      This defines what a 'Incantation'/'spell sheet' is.
      */
-    public Boolean SpellSheetCheck(ItemStack item) {
-        Boolean isSpell = false;
+    public static boolean SpellSheetCheck(ItemStack item) {
+        boolean isSpell = false;
         if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)) {
             if (item.getType() == Material.PAPER) {
                 isSpell = true;
@@ -42,7 +42,7 @@ public class ItemRules {
         return isSpell;
     }
 
-    public ItemStack newSpellSheet(String lore) {
+    public static ItemStack newSpellSheet(String lore) {
         ItemStack spellSheet = new ItemStack(Material.PAPER, 1);
         ItemMeta meta = spellSheet.getItemMeta();
         meta.setDisplayName(ChatColor.RESET + "Incantation");
@@ -53,4 +53,5 @@ public class ItemRules {
         spellSheet.setItemMeta(meta);
         return spellSheet;
     }
+
 }
