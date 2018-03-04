@@ -13,13 +13,17 @@ import org.bukkit.entity.ShulkerBullet;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class Stasis implements Spell {
 
     private static final String NAME = "Stasis";
     private static final String DISPLAY_NAME = "&eStasis";
+    private static final long COOLDOWN = 5;
+    
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
 
     @Override
     public String getName() {

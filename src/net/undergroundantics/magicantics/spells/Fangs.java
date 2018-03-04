@@ -9,6 +9,12 @@ public class Fangs implements Spell {
 
     private static final String NAME = "Fangs";
     private static final String DISPLAY_NAME = "&7Fangs";
+    private static final long COOLDOWN = 5;
+    
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
 
     @Override
     public String getName() {

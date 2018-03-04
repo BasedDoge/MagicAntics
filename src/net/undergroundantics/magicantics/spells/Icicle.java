@@ -18,6 +18,12 @@ public class Icicle implements Spell {
 
     private static final String NAME = "Icicle";
     private static final String DISPLAY_NAME = "&bIcicle";
+    private static final long COOLDOWN = 5;
+    
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
 
     @Override
     public String getName() {

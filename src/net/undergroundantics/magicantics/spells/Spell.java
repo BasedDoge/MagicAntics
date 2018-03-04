@@ -9,5 +9,6 @@ public interface Spell {
     public void onHit(ProjectileHitEvent e);
     public String getName();
     public String getDisplayName();
+    public long getCooldown();
 
 }

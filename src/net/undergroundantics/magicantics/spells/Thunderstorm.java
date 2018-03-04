@@ -13,6 +13,12 @@ public class Thunderstorm implements Spell {
 
     private static final String NAME = "Thunderstorm";
     private static final String DISPLAY_NAME = "&eThunderstorm";
+    private static final long COOLDOWN = 5;
+    
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
 
     @Override
     public String getName() {

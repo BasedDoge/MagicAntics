@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import static org.bukkit.inventory.ItemFlag.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -34,6 +35,10 @@ public class MagicAntics extends JavaPlugin {
     
     public Spell[] getSpells() {
         return spells;
+    }
+
+    public static void sendMessage(Player p, String msg) {
+        p.sendMessage("[Spellbook] " + msg);
     }
 
     @Override
