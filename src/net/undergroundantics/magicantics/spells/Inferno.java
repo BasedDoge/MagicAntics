@@ -13,7 +13,7 @@ public class Inferno implements Spell {
 
     private static final String NAME = "Inferno";
     private static final String DISPLAY_NAME = "&4Inferno";
-    private static final long COOLDOWN = 5;
+    private static final long COOLDOWN = 30;
     
     @Override
     public long getCooldown() {
