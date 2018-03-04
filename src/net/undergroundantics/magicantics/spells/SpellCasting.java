@@ -44,7 +44,7 @@ public class SpellCasting implements Listener {
                 long cooldownTime = spell.getCooldown();
                 long currentTime = System.currentTimeMillis() / 1000;
                 
-                if (lastUseTime == null || currentTime - lastUseTime > cooldownTime) {
+                if (lastUseTime == null || currentTime - lastUseTime >= cooldownTime) {
                     // The player is not on cooldown
                     spell.cast(p);
                     cooldowns.put(key, currentTime);
