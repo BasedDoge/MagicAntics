@@ -19,11 +19,6 @@ public class Icicle implements Spell {
     private static final String NAME = "Icicle";
     private static final String DISPLAY_NAME = "&bIcicle";
     private static final long COOLDOWN = 1;
-    
-    @Override
-    public long getCooldown() {
-        return COOLDOWN;
-    }
 
     @Override
     public String getName() {
@@ -40,12 +35,13 @@ public class Icicle implements Spell {
     }
 
     @Override
-    public void cast(Player p) {
-    Snowball icicle = p.launchProjectile(Snowball.class);
-    icicle.setShooter(p);
-    icicle.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
-    icicle.setVelocity(p.getLocation().getDirection().multiply(3));
-    p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
+    public long cast(Player p) {
+        Snowball icicle = p.launchProjectile(Snowball.class);
+        icicle.setShooter(p);
+        icicle.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
+        icicle.setVelocity(p.getLocation().getDirection().multiply(3));
+        p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
+        return COOLDOWN;
     }
 
     @Override

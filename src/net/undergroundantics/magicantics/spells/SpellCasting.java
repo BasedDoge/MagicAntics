@@ -40,17 +40,16 @@ public class SpellCasting implements Listener {
                 }
                 
                 CooldownKey key = new CooldownKey(p, spell);
-                Long lastUseTime = cooldowns.get(key);
-                long cooldownTime = spell.getCooldown();
+                Long unlockTime = cooldowns.get(key);
                 long currentTime = System.currentTimeMillis() / 1000;
                 
-                if (lastUseTime == null || currentTime - lastUseTime >= cooldownTime) {
+                if (unlockTime == null || currentTime >= unlockTime) {
                     // The player is not on cooldown
-                    spell.cast(p);
-                    cooldowns.put(key, currentTime);
+                    long cooldown = spell.cast(p);
+                    cooldowns.put(key, currentTime + cooldown);
                 } else {
                     // The player is on cooldown
-                    MagicAntics.sendMessage(p, "Your spells are on cooldown for " + (cooldownTime - (currentTime - lastUseTime)) + " more seconds");
+                    MagicAntics.sendMessage(p, "Your spells are on cooldown for " + (unlockTime - currentTime) + " more seconds");
                 }
 
             }
@@ -80,6 +79,7 @@ public class SpellCasting implements Listener {
         private final String spellName;
     }
 
+    // Stores the time when the cooldown resets
     private final Map<CooldownKey, Long> cooldowns = new HashMap<>();
     private final MagicAntics plugin;
 

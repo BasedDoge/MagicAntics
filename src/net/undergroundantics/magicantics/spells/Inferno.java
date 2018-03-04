@@ -14,11 +14,6 @@ public class Inferno implements Spell {
     private static final String NAME = "Inferno";
     private static final String DISPLAY_NAME = "&4Inferno";
     private static final long COOLDOWN = 30;
-    
-    @Override
-    public long getCooldown() {
-        return COOLDOWN;
-    }
 
     @Override
     public String getName() {
@@ -31,7 +26,7 @@ public class Inferno implements Spell {
     }
 
     @Override
-    public void cast(Player p) {
+    public long cast(Player p) {
         List<Entity> localMobsInferno = p.getNearbyEntities(6, 2, 6);
         p.getWorld().spawnParticle(Particle.FLAME, p.getEyeLocation(), 30, 4, 1, 4, 0.2);
         p.getWorld().spawnParticle(Particle.LAVA, p.getEyeLocation(), 8, 2, 0.5, 2, 0.1);
@@ -41,6 +36,7 @@ public class Inferno implements Spell {
                 mob.setFireTicks(160);
             }
         }
+        return COOLDOWN;
     }
 
     @Override

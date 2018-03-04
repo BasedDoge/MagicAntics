@@ -30,18 +30,18 @@ public class Familiar implements Spell{
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
-    
+
     public Familiar(Plugin plugin) {
         this.plugin = plugin;
     }
-    
-    @Override
-    public void cast(Player p) {
-        Egg dogEgg = p.launchProjectile(Egg.class);
 
+    @Override
+    public long cast(Player p) {
+        Egg dogEgg = p.launchProjectile(Egg.class);
         dogEgg.setShooter(p);
         dogEgg.setVelocity(p.getLocation().getDirection().multiply(3));
         dogEgg.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
+        return COOLDOWN;
     }
 
     @Override
@@ -62,11 +62,6 @@ public class Familiar implements Spell{
             wolf.setAngry(true);
             wolf.setTarget((LivingEntity) e.getHitEntity());
         }
-    }
-
-    @Override
-    public long getCooldown() {
-        return COOLDOWN;
     }
     
     private final Plugin plugin;
