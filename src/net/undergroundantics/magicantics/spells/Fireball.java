@@ -7,7 +7,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class Fireball implements Spell {
 
-    private static final String NAME = "Fangs";
+    private static final String NAME = "Fireball";
     private static final String DISPLAY_NAME = "&cFireball";
 
     @Override
