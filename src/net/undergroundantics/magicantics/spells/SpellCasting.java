@@ -4,6 +4,7 @@ import net.undergroundantics.magicantics.plugin.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,7 +29,6 @@ public class SpellCasting implements Listener {
                 e.setCancelled(true);
 
                 Player p = e.getPlayer();
-                long currentTime = System.currentTimeMillis() / 1000;
                 
                 Spell spell;
                 List<String> lore = book.getItemMeta().getLore();
@@ -39,10 +39,11 @@ public class SpellCasting implements Listener {
                     return;
                 }
                 
-                Long cooldownTime = spell.getCooldown();
                 CooldownKey key = new CooldownKey(p, spell);
                 Long lastUseTime = cooldowns.get(key);
-
+                long cooldownTime = spell.getCooldown();
+                long currentTime = System.currentTimeMillis() / 1000;
+                
                 if (lastUseTime == null || currentTime - lastUseTime > cooldownTime) {
                     // The player is not on cooldown
                     spell.cast(p);
@@ -60,8 +61,23 @@ public class SpellCasting implements Listener {
             this.player = player.getUniqueId();
             this.spellName = spell.getName();
         }
-        private UUID player;
-        private String spellName;
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof CooldownKey) {
+                CooldownKey c = (CooldownKey) o;
+                return player.equals(c.player) && spellName.equals(c.spellName);
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(player, spellName);
+        }
+    
+        private final UUID player;
+        private final String spellName;
     }
 
     private final Map<CooldownKey, Long> cooldowns = new HashMap<>();
