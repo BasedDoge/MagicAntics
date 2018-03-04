@@ -14,11 +14,6 @@ public class Thunderstorm implements Spell {
     private static final String NAME = "Thunderstorm";
     private static final String DISPLAY_NAME = "&eThunderstorm";
     private static final long COOLDOWN = 45;
-    
-    @Override
-    public long getCooldown() {
-        return COOLDOWN;
-    }
 
     @Override
     public String getName() {
@@ -31,7 +26,7 @@ public class Thunderstorm implements Spell {
     }
 
     @Override
-    public void cast(Player p) {
+    public long cast(Player p) {
         List<Entity> localMobsStorm = p.getNearbyEntities(6, 2, 6);
         for (Entity mob : localMobsStorm) {
             if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
@@ -43,6 +38,7 @@ public class Thunderstorm implements Spell {
         } else {
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
         }
+        return COOLDOWN;
     }
 
     @Override

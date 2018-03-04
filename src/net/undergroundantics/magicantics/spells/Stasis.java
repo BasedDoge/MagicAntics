@@ -21,11 +21,6 @@ public class Stasis implements Spell {
     private static final String NAME = "Stasis";
     private static final String DISPLAY_NAME = "&eStasis";
     private static final long COOLDOWN = 60;
-    
-    @Override
-    public long getCooldown() {
-        return COOLDOWN;
-    }
 
     @Override
     public String getName() {
@@ -42,7 +37,7 @@ public class Stasis implements Spell {
     }
 
     @Override
-    public void cast(Player p) {
+    public long cast(Player p) {
         for (Entity e : p.getNearbyEntities(3, 3, 3)) {
             if (e instanceof LivingEntity) {
                 ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
@@ -54,6 +49,7 @@ public class Stasis implements Spell {
             }
         }
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
+        return COOLDOWN;
     }
 
     @Override
