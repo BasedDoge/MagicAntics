@@ -35,8 +35,8 @@ public class ItemRules {
      */
     public static boolean SpellSheetCheck(ItemStack item) {
         boolean isSpell = false;
-        if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)) {
-            if (item.getType() == Material.PAPER) {
+        if (item != null && item.getType() == Material.PAPER) {
+            if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)) {
                 isSpell = true;
             }
         }
