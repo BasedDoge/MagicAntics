@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
 
 public class MagicAnticsCommandExecutor implements CommandExecutor{
 
-    ItemRules MAIR = new ItemRules();
-    
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         boolean doCmd = false;
@@ -18,7 +16,7 @@ public class MagicAnticsCommandExecutor implements CommandExecutor{
             if (args.length == 1) {
                 if(sender instanceof Player){
                     Player p = (Player) sender;
-                    p.getInventory().addItem(MAIR.newSpellSheet(args[0]));
+                    p.getInventory().addItem(ItemRules.newSpellSheet(args[0]));
                 doCmd = true;
                 }
             }
