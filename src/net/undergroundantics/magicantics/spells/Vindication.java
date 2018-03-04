@@ -26,16 +26,22 @@ public class Vindication implements Spell {
     public long cast(Player p) {
         List<LivingEntity> entList = new LinkedList();
         for (Entity ent : p.getNearbyEntities(10, 5, 10)) {
-            if (ent instanceof LivingEntity) {
+            if (ent instanceof LivingEntity && ent != p) {
                 entList.add((LivingEntity) ent);
             }
         }
         if (entList.size() > 0) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
                 Random rand = new Random();
                 int n = rand.nextInt(entList.size());
                 Vex vex = (Vex) p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                vex.setTarget(entList.get(n));
+                
+                Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+                    public void run() {
+                        vex.setTarget(entList.get(n));
+                    }
+                }, 20);
+                
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     public void run() {
                         vex.remove();
