@@ -2,7 +2,7 @@ package net.undergroundantics.magicantics.spells;
 
 import net.undergroundantics.magicantics.plugin.ItemRules;
 import java.util.List;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,17 +41,18 @@ public class SpellSelecting implements Listener {
     }
 
     public String findSpellInLore(Player p, ItemStack tome) {
-        Boolean found = false;
+        boolean found = false;
         String foundSpell = "";
-        int spellIndex = 1;
         String activeSpell = "";
+        int spellIndex = 1;
+        
 
         if (tome.getItemMeta().getLore().get(0).split("#").length > 1) {
             activeSpell = tome.getItemMeta().getLore().get(0).split("#")[1];
         } else if (tome.getItemMeta().getLore().size() > 1) {
             activeSpell = tome.getItemMeta().getLore().get(1);
         }
-
+        
         while (found == false && spellIndex < tome.getItemMeta().getLore().size()) {
             if (tome.getItemMeta().getLore().get(spellIndex).contains(activeSpell)) {
                 found = true;
@@ -60,9 +61,6 @@ public class SpellSelecting implements Listener {
 
                 } else if (tome.getItemMeta().getLore().size() > 1) {
                     foundSpell = tome.getItemMeta().getLore().get(1);
-
-                } else {
-                    foundSpell = "None";
                 }
             }
             spellIndex++;
