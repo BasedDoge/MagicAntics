@@ -2,6 +2,7 @@ package net.undergroundantics.magicantics.spells;
 
 import net.undergroundantics.magicantics.plugin.ItemRules;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -26,20 +27,16 @@ public class SpellCombining implements Listener {
                 ItemStack spellSheet = e.getPlayer().getInventory().getItemInMainHand();
                 ItemMeta spellSheetMeta = spellSheet.getItemMeta();
                 ItemMeta spellTomeMeta = spellTome.getItemMeta();
-                List<String> tomeSpellsList = Arrays.asList(new String[0]);
+                List<String> tomeSpellsList = spellTomeMeta.getLore();
 
-                if (spellTomeMeta.getLore().size() > 0) {       //these if statements might be useless now - were used to stop NPEs during development
-                    tomeSpellsList = spellTomeMeta.getLore();
+                if (!tomeSpellsList.contains(spellSheetMeta.getLore().get(0))){
                     tomeSpellsList.add(spellSheetMeta.getLore().get(0));
-                } else if (spellSheetMeta.getLore().size() > 0) {   //as above
-                    tomeSpellsList.add(spellSheetMeta.getLore().get(0));
-
+                    spellSheet.setAmount(spellSheet.getAmount() - 1);
+                    spellTomeMeta.setLore(tomeSpellsList);
+                    spellTome.setItemMeta(spellTomeMeta);
+                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.PLAYERS, 0.5f, 2.0f);
+                    e.getPlayer().getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, e.getPlayer().getEyeLocation(), 50, 0.75, 0.5, 0.75, 0.5);
                 }
-                spellSheet.setAmount(spellSheet.getAmount() - 1); //removes a single sheet from the stack now
-                spellTomeMeta.setLore(tomeSpellsList);
-                spellTome.setItemMeta(spellTomeMeta);
-                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.PLAYERS, 0.5f, 2.0f);
-                e.getPlayer().getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, e.getPlayer().getEyeLocation(), 50, 0.75, 0.5, 0.75, 0.5);
             }
         }
     }
