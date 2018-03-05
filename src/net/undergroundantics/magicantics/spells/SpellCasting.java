@@ -49,10 +49,11 @@ public class SpellCasting implements Listener {
                     cooldowns.put(key, currentTime + cooldown);
                 } else {
                     // The player is on cooldown
-                    MagicAntics.sendMessage(p, "You must wait (" + ChatColor.GRAY + (unlockTime - currentTime) +ChatColor.RESET + 
-                            "s) before casting " + ChatColor.translateAlternateColorCodes('&', spell.getDisplayName()) + ChatColor.RESET + " again.");
+                    MagicAntics.sendMessage(p,
+                            "You must wait (" + ChatColor.GRAY + (unlockTime - currentTime) + ChatColor.RESET + 
+                            "s) before casting " + ChatColor.translateAlternateColorCodes('&', spell.getDisplayName()) + 
+                            ChatColor.RESET + " again.");
                 }
-
             }
         }
     
