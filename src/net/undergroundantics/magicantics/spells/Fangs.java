@@ -2,6 +2,7 @@ package net.undergroundantics.magicantics.spells;
 
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.EvokerFangs;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
@@ -27,7 +28,7 @@ public class Fangs implements Spell {
             Location l = p.getLocation().add(p.getLocation().getDirection().setY(0).normalize().multiply(i));
             l.setY(l.getWorld().getHighestBlockAt(l).getY());
             if (l.getY() >= p.getLocation().getY() - 4 && l.getY() <= p.getLocation().getY() + 4) {
-                p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
+                EvokerFangs f = (EvokerFangs) p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
             }
         }
         return COOLDOWN;
