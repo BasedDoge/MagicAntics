@@ -51,12 +51,10 @@ public class Familiar implements Spell{
         wolf.setCustomName(ChatColor.GREEN + "Wolf Familiar");
         wolf.setCollarColor(DyeColor.GREEN);
         
-        Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-                    public void run() {
-                        wolf.getWorld().spawnParticle(Particle.CLOUD, wolf.getLocation(), 10, 0.2, 0.2, 0.2, 0.2);
-                        wolf.remove();
-                    }
-                }, 500);
+        Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+            wolf.getWorld().spawnParticle(Particle.CLOUD, wolf.getLocation(), 10, 0.2, 0.2, 0.2, 0.2);
+            wolf.remove();
+        }, 500);
         
         if (e.getHitEntity() instanceof LivingEntity){
             wolf.setAngry(true);

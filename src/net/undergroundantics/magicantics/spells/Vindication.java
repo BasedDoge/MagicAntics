@@ -37,17 +37,13 @@ public class Vindication implements Spell {
                 int n = rand.nextInt(entList.size());
                 Vex vex = (Vex) p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
                 
-                Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-                    public void run() {
-                        vex.setTarget(entList.get(n));
-                    }
+                Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+                    vex.setTarget(entList.get(n));
                 }, 20);
                 
-                Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-                    public void run() {
-                        p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 1, 0.1, 0.1, 0.1, 0);
-                        vex.remove();
-                    }
+                Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+                    p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 1, 0.1, 0.1, 0.1, 0);
+                    vex.remove();
                 }, 180);
             }
         }
