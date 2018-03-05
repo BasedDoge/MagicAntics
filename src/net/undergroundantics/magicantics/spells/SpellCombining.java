@@ -1,9 +1,8 @@
 package net.undergroundantics.magicantics.spells;
 
 import net.undergroundantics.magicantics.plugin.ItemRules;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -34,8 +33,11 @@ public class SpellCombining implements Listener {
                     spellSheet.setAmount(spellSheet.getAmount() - 1);
                     spellTomeMeta.setLore(tomeSpellsList);
                     spellTome.setItemMeta(spellTomeMeta);
+                    if (spellTomeMeta.getLore().size() == 1){
+                        spellTomeMeta.getLore().set(0, ChatColor.DARK_GRAY + "Active#" + spellTomeMeta);
+                    }
                     e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.PLAYERS, 0.5f, 2.0f);
-                    e.getPlayer().getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, e.getPlayer().getEyeLocation(), 50, 0.75, 0.5, 0.75, 0.5);
+                    e.getPlayer().getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, e.getPlayer().getEyeLocation(), 50, 0.75, 0.5, 0.75, 1);
                 }
             }
         }
