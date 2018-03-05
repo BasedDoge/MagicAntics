@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -44,6 +45,7 @@ public class Vindication implements Spell {
                 
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     public void run() {
+                        p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 1, 0.1, 0.1, 0.1, 0);
                         vex.remove();
                     }
                 }, 180);
