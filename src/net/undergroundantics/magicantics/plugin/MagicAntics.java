@@ -21,7 +21,9 @@ public class MagicAntics extends JavaPlugin {
 
     public MagicAntics() {
         super();
-        spells = new Spell[] { new Fangs(this), new Fireball(), new Icicle(this), new Inferno(), new Stasis(this), new Thunderstorm(), new Familiar(this), new Vindication(this) };
+        spells = new Spell[] { new Fangs(this), new Fireball(), new Icicle(this),
+                 new Inferno(), new Stasis(this), new Thunderstorm(),
+                 new Familiar(this), new Vindication(this), new Atomiser()};
     }
 
     public Spell getSpell(String name) {
