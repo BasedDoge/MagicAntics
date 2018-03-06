@@ -28,8 +28,6 @@ public class Atomiser implements Spell {
         Block tBlock = p.getTargetBlock(null, 64);
         double dist = p.getLocation().distance(tBlock.getLocation());
         double h = ((tBlock.getLocation().getY()) - (p.getLocation().getY()) ) / dist;
-        p.sendMessage("height: " + p.getEyeHeight());
-        p.sendMessage("h: " + h);
         for (int i = 0; i <= dist; i++) {
             Location loc = p.getLocation().add(p.getLocation().getDirection().setY(h).normalize().multiply(i));
             p.getWorld().spawnParticle(Particle.REDSTONE, loc, 0, -0.3, 0, 0.5, 1);
