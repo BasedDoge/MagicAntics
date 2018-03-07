@@ -1,6 +1,7 @@
 package net.undergroundantics.magicantics.spells;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -40,11 +41,11 @@ public class Atomiser implements Spell {
             //and 1, the first of which automatically is increaed by 1 when spawned
         }
         
-        if (tBlock instanceof Container) {
+        if (tBlock.getState() instanceof Container || tBlock.getType() == Material.BEDROCK) {
             p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, tBlock.getLocation(), 5, 0.5, 0.5, 0.5, 0.1);
         }
         else{
-            p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tBlock.getLocation(), 3, 0.5, 0.5, 0.5, 0.1);
+            p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tBlock.getLocation(), 5, 1, 1, 1, 0.1);
             tBlock.breakNaturally(null);
         }
         return COOLDOWN;
