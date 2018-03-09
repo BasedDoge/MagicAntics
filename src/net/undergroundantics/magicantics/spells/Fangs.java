@@ -40,7 +40,7 @@ public class Fangs implements Spell {
                 EvokerFangs f = (EvokerFangs) p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
                     for (Entity ent : f.getNearbyEntities(0.5, 0.5, 0.5)){
-                        if(ent instanceof Item){
+                        if(ent instanceof Item && ent.getWorld() == p.getWorld()){
                             ent.teleport(p);
                             p.getWorld().spawnParticle(Particle.SPIT, p.getLocation(), 1, 0.2, 0.2, 0.2, 0.1);
                         }
