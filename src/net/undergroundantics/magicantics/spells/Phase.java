@@ -26,12 +26,9 @@ public class Phase implements Spell {
         boolean foundWall = false;
         while (start.distanceSquared(target) <= MAX_RANGE_SQ) {
             if (foundWall) {
-                Location targets[] = {target, target.add(0, 1, 0)};
-                for (Location t : targets) {
-                    if (isSafe(t)) {
-                        player.teleport(t);
-                        return SUCCESS_COOLDOWN;
-                    }
+                if (isSafe(target)) {
+                    player.teleport(target);
+                    return SUCCESS_COOLDOWN;
                 }
             } else {
                 foundWall = target.getBlock().getType().isSolid();
