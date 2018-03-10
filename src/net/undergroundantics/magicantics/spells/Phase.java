@@ -1,6 +1,9 @@
 package net.undergroundantics.magicantics.spells;
 
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -29,6 +32,8 @@ public class Phase implements Spell {
                 Location trueTarget = target.getBlock().getRelative(0, -1, 0).getLocation();
                 if (isSafe(trueTarget)) {
                     player.teleport(trueTarget);
+                    player.getWorld().spawnParticle(Particle.DRAGON_BREATH, player.getEyeLocation(), 15, 0.5, 1, 0.5, 0.0);
+                    player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 0.0f);
                     return SUCCESS_COOLDOWN;
                 }
             } else {
@@ -36,7 +41,7 @@ public class Phase implements Spell {
             }
             target = target.add(direction);
         }
-
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
         return FAIL_COOLDOWN;
     }
 
@@ -69,7 +74,6 @@ public class Phase implements Spell {
                 return landing.getType().isSolid();
             }
         }
-
         return false;
     }
 }
