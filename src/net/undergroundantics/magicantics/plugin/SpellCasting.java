@@ -34,6 +34,8 @@ public class SpellCasting implements Listener {
                 List<String> lore = book.getItemMeta().getLore();
                 if (lore.size() > 1) {
                    spell = plugin.getSpell(ChatColor.stripColor(lore.get(0).split("#")[1]));
+                   if (spell == null)
+                        return;
                 } else {
                     // Empty book
                     return;
