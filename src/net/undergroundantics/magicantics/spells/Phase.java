@@ -20,15 +20,18 @@ public class Phase implements Spell {
     @Override
     public long cast(Player player) {
         Location start = player.getLocation();
-        Location target = new Location(start.getWorld(), start.getX(), start.getY(), start.getZ());
+        Location target = start.clone();
         Vector direction = start.getDirection().multiply(0.2);
 
         boolean foundWall = false;
         while (start.distanceSquared(target) <= MAX_RANGE_SQ) {
             if (foundWall) {
-                if (isSafe(target)) {
-                    player.teleport(target);
-                    return SUCCESS_COOLDOWN;
+                Location targets[] = {target, target.clone().add(0, 1, 0) };
+                for (Location t : targets) {
+                    if (isSafe(t)) {
+                        player.teleport(t);
+                        return SUCCESS_COOLDOWN;
+                    }
                 }
             } else {
                 foundWall = target.getBlock().getType().isSolid();
