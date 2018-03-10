@@ -41,8 +41,4 @@ public class Thunderstorm implements Spell {
         return COOLDOWN;
     }
 
-    @Override
-    public void onHit(ProjectileHitEvent e) {
-    }
-
 }

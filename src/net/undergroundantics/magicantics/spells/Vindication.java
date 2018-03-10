@@ -10,7 +10,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vex;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.plugin.Plugin;
 
 public class Vindication implements Spell {
@@ -48,11 +47,6 @@ public class Vindication implements Spell {
             }
         }
         return COOLDOWN;
-    }
-
-    @Override
-    public void onHit(ProjectileHitEvent e) {
-
     }
 
     @Override

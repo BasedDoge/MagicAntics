@@ -31,8 +31,4 @@ public class Fireball implements Spell {
         return COOLDOWN;
     }
 
-    @Override
-    public void onHit(ProjectileHitEvent e) {
-    }
-
 }

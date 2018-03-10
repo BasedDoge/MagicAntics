@@ -51,7 +51,4 @@ public class Atomiser implements Spell {
         return COOLDOWN;
     }
 
-    @Override
-    public void onHit(ProjectileHitEvent e) {
-    }
 }

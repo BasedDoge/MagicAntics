@@ -52,8 +52,5 @@ public class Fangs implements Spell {
         return COOLDOWN;
     }
 
-    @Override
-    public void onHit(ProjectileHitEvent e) {
-    }
     private final Plugin plugin;
 }

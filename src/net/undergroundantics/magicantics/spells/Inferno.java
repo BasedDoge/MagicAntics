@@ -39,8 +39,4 @@ public class Inferno implements Spell {
         return COOLDOWN;
     }
 
-    @Override
-    public void onHit(ProjectileHitEvent e) {
-    }
-
 }
