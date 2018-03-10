@@ -3,7 +3,6 @@ package net.undergroundantics.magicantics.spells;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
-import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class Fireball implements Spell {
 

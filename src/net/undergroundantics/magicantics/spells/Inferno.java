@@ -7,7 +7,6 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class Inferno implements Spell {
 

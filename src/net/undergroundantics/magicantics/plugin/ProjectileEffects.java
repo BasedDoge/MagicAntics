@@ -1,6 +1,6 @@
-package net.undergroundantics.magicantics.spells;
+package net.undergroundantics.magicantics.plugin;
 
-import net.undergroundantics.magicantics.plugin.MagicAntics;
+import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -21,5 +21,4 @@ public class ProjectileEffects implements Listener {
     }
 
     private final MagicAntics plugin;
-
 }

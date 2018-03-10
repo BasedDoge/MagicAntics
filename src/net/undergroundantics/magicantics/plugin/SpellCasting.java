@@ -1,12 +1,12 @@
-package net.undergroundantics.magicantics.spells;
+package net.undergroundantics.magicantics.plugin;
 
-import net.undergroundantics.magicantics.plugin.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
+import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

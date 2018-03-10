@@ -1,6 +1,5 @@
-package net.undergroundantics.magicantics.spells;
+package net.undergroundantics.magicantics.plugin;
 
-import net.undergroundantics.magicantics.plugin.ItemRules;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;

@@ -8,7 +8,6 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class Atomiser implements Spell {
 
