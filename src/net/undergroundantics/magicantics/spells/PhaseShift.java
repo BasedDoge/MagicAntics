@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 public class PhaseShift implements Spell {
 
     private static final String NAME = "PhaseShift";
-    private static final String DISPLAY_NAME = "&3PhaseShift";   
+    private static final String DISPLAY_NAME = "&9PhaseShift";
 
     private static final int SUCCESS_COOLDOWN = 10;
     private static final int FAIL_COOLDOWN = 3;
@@ -25,8 +25,8 @@ public class PhaseShift implements Spell {
 
         boolean foundWall = false;
         while (start.distanceSquared(target) <= MAX_RANGE_SQ) {
-            if ( foundWall ) {
-                if ( isSafe(target) ) {
+            if (foundWall) {
+                if (isSafe(target)) {
                     player.teleport(target);
                     return SUCCESS_COOLDOWN;
                 }
@@ -48,14 +48,15 @@ public class PhaseShift implements Spell {
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
-    
+
     private boolean isSafe(Location loc) {
 
         // Check for suffocation
         Block feet = (new Location(loc.getWorld(), loc.getX(), loc.getY() + 1, loc.getZ())).getBlock();
         Block head = (new Location(loc.getWorld(), loc.getX(), loc.getY() + 2, loc.getZ())).getBlock();
-        if (!feet.isEmpty() || !head.isEmpty())
+        if (!feet.isEmpty() || !head.isEmpty()) {
             return false;
+        }
 
         // Check for solid block not too far under feet
         Location landing = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
@@ -68,9 +69,6 @@ public class PhaseShift implements Spell {
                 return landing.getBlock().getType().isSolid();
             }
         }
-
         return false;
     }
-
-
 }
