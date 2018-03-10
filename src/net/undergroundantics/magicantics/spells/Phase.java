@@ -26,11 +26,12 @@ public class Phase implements Spell {
         boolean foundWall = false;
         while (start.distanceSquared(target) <= MAX_RANGE_SQ) {
             if (foundWall) {
-                if (isSafe(target)) {
-                    Location l = target.getBlock().getLocation();
-                    l.setY(l.getY() + 1);
-                    player.teleport(l);
-                    return SUCCESS_COOLDOWN;
+                Location targets[] = {target, target.add(0, 1, 0)};
+                for (Location t : targets) {
+                    if (isSafe(t)) {
+                        player.teleport(t);
+                        return SUCCESS_COOLDOWN;
+                    }
                 }
             } else {
                 foundWall = target.getBlock().getType().isSolid();
@@ -53,21 +54,21 @@ public class Phase implements Spell {
 
     private boolean isSafe(Location loc) {
         // Check for suffocation
-        Block feet = (new Location(loc.getWorld(), loc.getX(), loc.getY() + 1, loc.getZ())).getBlock();
-        Block head = (new Location(loc.getWorld(), loc.getX(), loc.getY() + 2, loc.getZ())).getBlock();
+        Block feet = loc.getBlock();
+        Block head = feet.getRelative(0, +1, 0);
         if (!feet.isEmpty() || !head.isEmpty()) {
             return false;
         }
 
         // Check for solid block not too far under feet
-        Location landing = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
+        Block landing = feet.getRelative(0, -1, 0);
         int fall = 0;
-        while (landing.getBlock().getY() > 0 && fall <= MAX_FALL) {
-            if (landing.getBlock().isEmpty()) {
+        while (landing.getY() > 0 && fall <= MAX_FALL) {
+            if (landing.isEmpty()) {
                 fall++;
-                landing.setY(landing.getY() - 1);
+                landing = landing.getRelative(0, -1, 0);
             } else {
-                return landing.getBlock().getType().isSolid();
+                return landing.getType().isSolid();
             }
         }
 
