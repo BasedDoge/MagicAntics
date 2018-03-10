@@ -30,6 +30,10 @@ public class Phase implements Spell {
         while (start.distanceSquared(target) <= MAX_RANGE_SQ) {
             if (foundWall) {
                 Location trueTarget = target.getBlock().getRelative(0, -1, 0).getLocation();
+                trueTarget.setX(trueTarget.getX() + 0.5);
+                trueTarget.setZ(trueTarget.getZ() + 0.5);
+                trueTarget.setPitch(start.getPitch());
+                trueTarget.setYaw(start.getYaw());
                 if (isSafe(trueTarget)) {
                     player.teleport(trueTarget);
                     player.getWorld().spawnParticle(Particle.DRAGON_BREATH, player.getEyeLocation(), 15, 0.5, 1, 0.5, 0.0);
