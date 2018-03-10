@@ -13,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class SpellCasting implements Listener {
@@ -25,7 +26,7 @@ public class SpellCasting implements Listener {
     public void onCast(PlayerInteractEvent e) {
         ItemStack book = e.getPlayer().getInventory().getItemInMainHand();
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
-            if (ItemRules.SpellTomeCheck(book)) {
+            if (ItemRules.SpellTomeCheck(book) && e.getHand() == EquipmentSlot.HAND) {
                 e.setCancelled(true);
 
                 Player p = e.getPlayer();
