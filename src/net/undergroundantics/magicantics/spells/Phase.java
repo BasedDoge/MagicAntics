@@ -14,15 +14,29 @@ public class Phase implements Spell {
     private static final String NAME = "Phase";
     private static final String DISPLAY_NAME = ChatColor.BLUE + NAME;
 
-    private static final int SUCCESS_COOLDOWN = 10;
-    private static final int FAIL_COOLDOWN = 3;
+    private static final int COOLDOWN = 10;
 
     private static final int MAX_FALL = 3; // Max distance player should fall after phaseshift
     private static final int MAX_RANGE = 6; // Max distance player can phaseshift
     private static final int MAX_RANGE_SQ = MAX_RANGE * MAX_RANGE;
 
     @Override
-    public long cast(Player player) {
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return DISPLAY_NAME;
+    }
+
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+
+    @Override
+    public boolean cast(Player player) {
         Location start = player.getEyeLocation();
         Location target = start.clone();
         Vector direction = start.getDirection().multiply(0.2);
@@ -39,7 +53,7 @@ public class Phase implements Spell {
                     player.teleport(trueTarget);
                     player.getWorld().spawnParticle(Particle.DRAGON_BREATH, player.getEyeLocation(), 15, 0.5, 1, 0.5, 0.0);
                     player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 0.0f);
-                    return SUCCESS_COOLDOWN;
+                    return true;
                 }
             } else {
                 foundWall = target.getBlock().getType().isSolid();
@@ -47,17 +61,7 @@ public class Phase implements Spell {
             target = target.add(direction);
         }
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
-        return FAIL_COOLDOWN;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public String getDisplayName() {
-        return DISPLAY_NAME;
+        return false;
     }
 
     private boolean isSafe(Location loc) {

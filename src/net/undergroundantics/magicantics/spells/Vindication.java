@@ -18,13 +18,28 @@ public class Vindication implements Spell {
     private static final String NAME = "Vindication";
     private static final String DISPLAY_NAME = ChatColor.DARK_AQUA + NAME;
     private static final long COOLDOWN = 30;
-    
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return DISPLAY_NAME;
+    }
+
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+   
     public Vindication(Plugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public long cast(Player p) {
+    public boolean cast(Player p) {
         List<LivingEntity> entList = new LinkedList();
         for (Entity ent : p.getNearbyEntities(10, 5, 10)) {
             if (ent instanceof LivingEntity && ent != p) {
@@ -47,18 +62,8 @@ public class Vindication implements Spell {
                 }, 180);
             }
         }
-        return COOLDOWN;
+        return true;
     }
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public String getDisplayName() {
-        return DISPLAY_NAME;
-    }
-    
     private final Plugin plugin;
 }

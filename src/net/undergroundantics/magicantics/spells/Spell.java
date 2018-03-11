@@ -5,9 +5,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 
 public interface Spell {
 
-    public long cast(Player p);
+    public boolean cast(Player p);
     default public void onHit(ProjectileHitEvent e) {}
     public String getName();
     public String getDisplayName();
+    public long getCooldown();
 
 }

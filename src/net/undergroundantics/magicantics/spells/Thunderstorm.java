@@ -26,7 +26,12 @@ public class Thunderstorm implements Spell {
     }
 
     @Override
-    public long cast(Player p) {
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+
+    @Override
+    public boolean cast(Player p) {
         List<Entity> localMobsStorm = p.getNearbyEntities(6, 2, 6);
         for (Entity mob : localMobsStorm) {
             if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
@@ -38,7 +43,7 @@ public class Thunderstorm implements Spell {
         } else {
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
         }
-        return COOLDOWN;
+        return true;
     }
 
 }

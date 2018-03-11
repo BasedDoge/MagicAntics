@@ -27,7 +27,12 @@ public class Atomiser implements Spell {
     }
 
     @Override
-    public long cast(Player p) {
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+
+    @Override
+    public boolean cast(Player p) {
         Block tBlock = p.getTargetBlock(null, 64);
         double dist = p.getLocation().distance(tBlock.getLocation());
         double h = ((tBlock.getLocation().getY()) - (p.getLocation().getY()) ) / dist;
@@ -48,7 +53,7 @@ public class Atomiser implements Spell {
             p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tBlock.getLocation(), 5, 1, 1, 1, 0.1);
             tBlock.breakNaturally(null);
         }
-        return COOLDOWN;
+        return true;
     }
 
 }

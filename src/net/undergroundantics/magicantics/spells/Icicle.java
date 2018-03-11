@@ -30,19 +30,24 @@ public class Icicle implements Spell {
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
-    
+
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+
     public Icicle(Plugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public long cast(Player p) {
+    public boolean cast(Player p) {
         Snowball icicle = p.launchProjectile(Snowball.class);
         icicle.setShooter(p);
         icicle.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
         icicle.setVelocity(p.getLocation().getDirection().multiply(3));
         p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
-        return COOLDOWN;
+        return true;
     }
 
     @Override

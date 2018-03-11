@@ -45,7 +45,7 @@ public class SpellCasting implements Listener {
 
                     if (unlockTime == null || currentTime >= unlockTime) {
                         // The player is not on cooldown
-                        long cooldown = spell.cast(p);
+                        long cooldown = spell.cast(p) ? spell.getCooldown() : spell.getCooldown() / 10;
                         cooldowns.put(key, currentTime + cooldown);
                     } else {
                         // The player is on cooldown
@@ -57,8 +57,8 @@ public class SpellCasting implements Listener {
                 } else if (ItemRules.isSpellScroll(item)) {
                     Spell spell = plugin.getSpellFromDisplayName(item.getItemMeta().getLore().get(0));
                     if (spell != null) {
-                        spell.cast(p);
-                        item.setAmount(item.getAmount() - 1);
+                        if (spell.cast(p))
+                            item.setAmount(item.getAmount() - 1);
                     }
                 }
             }

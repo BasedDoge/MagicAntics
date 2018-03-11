@@ -26,7 +26,12 @@ public class Inferno implements Spell {
     }
 
     @Override
-    public long cast(Player p) {
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+
+    @Override
+    public boolean cast(Player p) {
         List<Entity> localMobsInferno = p.getNearbyEntities(6, 2, 6);
         p.getWorld().spawnParticle(Particle.FLAME, p.getEyeLocation(), 30, 4, 1, 4, 0.2);
         p.getWorld().spawnParticle(Particle.LAVA, p.getEyeLocation(), 8, 2, 0.5, 2, 0.1);
@@ -36,7 +41,7 @@ public class Inferno implements Spell {
                 mob.setFireTicks(160);
             }
         }
-        return COOLDOWN;
+        return true;
     }
 
 }

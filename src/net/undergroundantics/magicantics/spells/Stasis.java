@@ -33,12 +33,17 @@ public class Stasis implements Spell {
         return DISPLAY_NAME;
     }
 
+    @Override
+    public long getCooldown() {
+        return COOLDOWN;
+    }
+
     public Stasis(Plugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public long cast(Player p) {
+    public boolean cast(Player p) {
         for (Entity e : p.getNearbyEntities(3, 3, 3)) {
             if (e instanceof LivingEntity) {
                 ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
@@ -50,7 +55,7 @@ public class Stasis implements Spell {
             }
         }
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
-        return COOLDOWN;
+        return true;
     }
 
     @Override
