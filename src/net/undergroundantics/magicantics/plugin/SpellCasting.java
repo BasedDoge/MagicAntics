@@ -24,36 +24,45 @@ public class SpellCasting implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCast(PlayerInteractEvent e) {
-        ItemStack book = e.getPlayer().getInventory().getItemInMainHand();
+        ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (ItemRules.isSpellTome(book) && e.getHand() == EquipmentSlot.HAND) {
-                if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
-                    return;
-                
-                e.setCancelled(true);
+            if ( e.getHand() == EquipmentSlot.HAND ) {
                 Player p = e.getPlayer();
-                Spell spell = plugin.getActiveSpell(book);
-                if (spell == null)
-                    return;
-                if ( ! plugin.hasLearntSpell(p, spell) ) 
-                    return;
-                
-                CooldownKey key = new CooldownKey(p, spell);
-                Long unlockTime = cooldowns.get(key);
-                long currentTime = System.currentTimeMillis() / 1000;
-                
-                if (unlockTime == null || currentTime >= unlockTime) {
-                    // The player is not on cooldown
-                    long cooldown = spell.cast(p);
-                    cooldowns.put(key, currentTime + cooldown);
-                } else {
-                    // The player is on cooldown
-                    MagicAntics.sendMessage(p,
-                            "You must wait (" + ChatColor.GRAY + (unlockTime - currentTime) + ChatColor.RESET + 
-                            "s) before casting " + ChatColor.translateAlternateColorCodes('&', spell.getDisplayName()) + 
-                            ChatColor.RESET + " again.");
+                if (ItemRules.isSpellTome(item)) {
+                    if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
+                        return;
+
+                    e.setCancelled(true);
+                    Spell spell = plugin.getActiveSpell(item);
+                    if (spell == null)
+                        return;
+                    if ( ! plugin.hasLearntSpell(p, spell) ) 
+                        return;
+
+                    CooldownKey key = new CooldownKey(p, spell);
+                    Long unlockTime = cooldowns.get(key);
+                    long currentTime = System.currentTimeMillis() / 1000;
+
+                    if (unlockTime == null || currentTime >= unlockTime) {
+                        // The player is not on cooldown
+                        long cooldown = spell.cast(p);
+                        cooldowns.put(key, currentTime + cooldown);
+                    } else {
+                        // The player is on cooldown
+                        MagicAntics.sendMessage(p,
+                                "You must wait (" + ChatColor.GRAY + (unlockTime - currentTime) + ChatColor.RESET + 
+                                "s) before casting " + ChatColor.translateAlternateColorCodes('&', spell.getDisplayName()) + 
+                                ChatColor.RESET + " again.");
+                    }
+                } else if (ItemRules.isSpellScroll(item)) {
+                    Spell spell = plugin.getSpellFromDisplayName(item.getItemMeta().getLore().get(0));
+                    if (spell != null) {
+                        spell.cast(p);
+                        item.setAmount(item.getAmount() - 1);
+                    }
                 }
             }
+            
         }
     }
 
