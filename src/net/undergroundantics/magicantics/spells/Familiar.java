@@ -48,6 +48,7 @@ public class Familiar implements Spell{
     public void onHit(ProjectileHitEvent e) {
         Wolf wolf = (Wolf)e.getEntity().getWorld().spawnEntity(e.getEntity().getLocation(), EntityType.WOLF);
         wolf.setOwner((Player)e.getEntity().getShooter());
+        wolf.setHealth(20);
         wolf.setCustomName(ChatColor.GREEN + "Wolf Familiar");
         wolf.setCollarColor(DyeColor.GREEN);
         
