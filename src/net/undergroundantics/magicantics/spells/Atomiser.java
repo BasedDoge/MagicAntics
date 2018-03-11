@@ -33,6 +33,7 @@ public class Atomiser implements Spell {
 
     @Override
     public boolean cast(Player p) {
+        boolean castSuccess = false;
         Block tBlock = p.getTargetBlock(null, 64);
         double dist = p.getLocation().distance(tBlock.getLocation());
         double h = ((tBlock.getLocation().getY()) - (p.getLocation().getY()) ) / dist;
@@ -41,9 +42,6 @@ public class Atomiser implements Spell {
         for (int i = 0; i <= dist; i++) {
             Location loc = p.getLocation().add(p.getLocation().getDirection().setY(h).normalize().multiply(i));
             p.getWorld().spawnParticle(Particle.REDSTONE, loc, 0, -0.3, 0, 0.5, 1);
-            //to create coloured particles count must be 0
-            //and the 3 following varibales should be between 0
-            //and 1, the first of which automatically is increaed by 1 when spawned
         }
         
         if (tBlock.getState() instanceof Container || tBlock.getType() == Material.BEDROCK) {
@@ -52,8 +50,8 @@ public class Atomiser implements Spell {
         else{
             p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tBlock.getLocation(), 5, 1, 1, 1, 0.1);
             tBlock.breakNaturally(null);
+            castSuccess = true;
         }
-        return true;
+        return castSuccess;
     }
-
 }

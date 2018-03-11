@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import java.util.List;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -44,7 +45,9 @@ public class Stasis implements Spell {
 
     @Override
     public boolean cast(Player p) {
-        for (Entity e : p.getNearbyEntities(3, 3, 3)) {
+        boolean castSuccess = false;
+        List<Entity> localMobsStasis = p.getNearbyEntities(6, 2, 6);
+        for (Entity e : localMobsStasis) {
             if (e instanceof LivingEntity) {
                 ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
                 stasisProj.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
@@ -54,8 +57,13 @@ public class Stasis implements Spell {
                 stasisProj.setBounce(true);
             }
         }
-        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
-        return true;
+        if (localMobsStasis.isEmpty()) {
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
+        } else {
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
+            castSuccess = true;
+        }
+        return castSuccess;
     }
 
     @Override

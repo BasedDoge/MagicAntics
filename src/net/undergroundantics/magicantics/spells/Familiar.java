@@ -42,11 +42,12 @@ public class Familiar implements Spell{
 
     @Override
     public boolean cast(Player p) {
+        boolean castSuccess = true;
         Egg dogEgg = p.launchProjectile(Egg.class);
         dogEgg.setShooter(p);
         dogEgg.setVelocity(p.getLocation().getDirection().multiply(3));
         dogEgg.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
-        return true;
+        return castSuccess;
     }
 
     @Override

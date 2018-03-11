@@ -42,12 +42,13 @@ public class Icicle implements Spell {
 
     @Override
     public boolean cast(Player p) {
+        boolean castSuccess = true;
         Snowball icicle = p.launchProjectile(Snowball.class);
         icicle.setShooter(p);
         icicle.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
         icicle.setVelocity(p.getLocation().getDirection().multiply(3));
         p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getEyeLocation().subtract(0, 0.3, 0), 3, 0.1, 0.1, 0.1, 0.1);
-        return true;
+        return castSuccess;
     }
 
     @Override

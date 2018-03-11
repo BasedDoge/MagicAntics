@@ -32,18 +32,20 @@ public class Thunderstorm implements Spell {
 
     @Override
     public boolean cast(Player p) {
+        boolean castSuccess = false;
         List<Entity> localMobsStorm = p.getNearbyEntities(6, 2, 6);
         for (Entity mob : localMobsStorm) {
             if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
                 mob.getWorld().strikeLightning(mob.getLocation().add(0, 1, 0));
             }
         }
-        if (localMobsStorm.size() > 0) {
-            p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getEyeLocation(), 50, 4, 1, 4, 0);
-        } else {
+        if (localMobsStorm.isEmpty()) {
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
+        } else {
+            p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getEyeLocation(), 50, 4, 1, 4, 0);
+            castSuccess = true;
         }
-        return true;
+        return castSuccess;
     }
 
 }

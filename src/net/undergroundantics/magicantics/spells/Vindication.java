@@ -40,13 +40,16 @@ public class Vindication implements Spell {
 
     @Override
     public boolean cast(Player p) {
+        boolean castSuccess = false;
         List<LivingEntity> entList = new LinkedList();
-        for (Entity ent : p.getNearbyEntities(10, 5, 10)) {
+        List<Entity> localMobsVindication = p.getNearbyEntities(10, 5, 10);
+        for (Entity ent : localMobsVindication) {
             if (ent instanceof LivingEntity && ent != p) {
                 entList.add((LivingEntity) ent);
             }
         }
         if (entList.size() > 0) {
+            castSuccess = true;
             for (int i = 0; i < 6; i++) {
                 Random rand = new Random();
                 int n = rand.nextInt(entList.size());
@@ -62,7 +65,7 @@ public class Vindication implements Spell {
                 }, 180);
             }
         }
-        return true;
+        return castSuccess;
     }
 
     private final Plugin plugin;

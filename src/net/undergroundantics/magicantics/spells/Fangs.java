@@ -16,6 +16,8 @@ public class Fangs implements Spell {
     private static final String NAME = "Fangs";
     private static final String DISPLAY_NAME = ChatColor.GRAY + NAME;
     private static final long COOLDOWN = 5;
+    private static final int RANGE = 9;
+    private static final int VRANGE = 4;
 
     public Fangs(Plugin plugin) {
         this.plugin = plugin;
@@ -39,10 +41,12 @@ public class Fangs implements Spell {
 
     @Override
     public boolean cast(Player p) {
-        for (int i = 1; i < 9; i++) {
+        boolean castSuccess = true;
+        for (int i = 1; i < RANGE; i++) {
+            int failCount = 0;
             Location l = p.getLocation().add(p.getLocation().getDirection().setY(0).normalize().multiply(i));
             l.setY(l.getWorld().getHighestBlockAt(l).getY());
-            if (l.getY() >= p.getLocation().getY() - 4 && l.getY() <= p.getLocation().getY() + 4) {
+            if (l.getY() >= p.getLocation().getY() - VRANGE && l.getY() <= p.getLocation().getY() + VRANGE) {
                 EvokerFangs f = (EvokerFangs) p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
                     for (Entity ent : f.getNearbyEntities(0.5, 0.5, 0.5)){
@@ -54,8 +58,14 @@ public class Fangs implements Spell {
                 f.remove();
         }, 15);
             }
+            else {
+                failCount++;
+                if (failCount == RANGE){
+                    castSuccess = false;
+                }
+            }
         }
-        return true;
+        return castSuccess;
     }
 
     private final Plugin plugin;
