@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -15,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 public class Vindication implements Spell {
 
     private static final String NAME = "Vindication";
-    private static final String DISPLAY_NAME = "&3Vindication";
+    private static final String DISPLAY_NAME = ChatColor.DARK_AQUA + NAME;
     private static final long COOLDOWN = 30;
     
     public Vindication(Plugin plugin) {

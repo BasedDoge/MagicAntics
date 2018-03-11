@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -11,7 +12,7 @@ import org.bukkit.util.Vector;
 public class Phase implements Spell {
 
     private static final String NAME = "Phase";
-    private static final String DISPLAY_NAME = "&9Phase";
+    private static final String DISPLAY_NAME = ChatColor.BLUE + NAME;
 
     private static final int SUCCESS_COOLDOWN = 10;
     private static final int FAIL_COOLDOWN = 3;

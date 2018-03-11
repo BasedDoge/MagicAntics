@@ -19,7 +19,7 @@ public class CommandTabComplete implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String string, String[] args) {
         List<String> list = null;
-        if (cmd.getName().equalsIgnoreCase("NewSpell")) {
+        if (cmd.getName().equalsIgnoreCase("spellscroll") || cmd.getName().equalsIgnoreCase("spellbook")) {
             list = spells;
         }
         return list;
