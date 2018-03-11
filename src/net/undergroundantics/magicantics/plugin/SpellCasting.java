@@ -54,7 +54,7 @@ public class SpellCasting implements Listener {
                                 ChatColor.RESET + " again.");
                     }
                 } else if (ItemRules.isSpellScroll(item)) {
-                    Spell spell = plugin.getSpellFromDisplayName(item.getItemMeta().getLore().get(0));
+                    Spell spell = plugin.getSpellFromSpellScroll(item);
                     if (spell != null) {
                         if (spell.cast(p))
                             item.setAmount(item.getAmount() - 1);

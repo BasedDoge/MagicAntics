@@ -25,7 +25,7 @@ public class SpellLearning implements Listener {
             ItemStack spellBook = e.getPlayer().getInventory().getItemInMainHand();
             if (ItemRules.isSpellBook(spellBook)) {
                 e.setCancelled(true);
-                Spell spell = plugin.getSpellFromDisplayName(spellBook.getItemMeta().getLore().get(0));
+                Spell spell = plugin.getSpellFromSpellBook(spellBook);
                 Player p = e.getPlayer();
                 if ( ! plugin.hasLearntSpell(p, spell) ) {
                     plugin.learnSpell(p, spell);
