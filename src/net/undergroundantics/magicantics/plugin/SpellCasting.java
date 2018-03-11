@@ -33,16 +33,11 @@ public class SpellCasting implements Listener {
                 
                 e.setCancelled(true);
                 Player p = e.getPlayer();
-                Spell spell;
-                List<String> lore = book.getItemMeta().getLore();
-                if (lore.size() > 1) {
-                   spell = plugin.getSpellFromDisplayName(lore.get(0).split("#")[1]);
-                   if (spell == null)
-                        return;
-                } else {
-                    // Empty book
+                Spell spell = plugin.getActiveSpell(book);
+                if (spell == null)
                     return;
-                }
+                if ( ! plugin.hasLearntSpell(p, spell) ) 
+                    return;
                 
                 CooldownKey key = new CooldownKey(p, spell);
                 Long unlockTime = cooldowns.get(key);

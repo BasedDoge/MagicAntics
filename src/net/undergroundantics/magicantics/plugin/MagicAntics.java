@@ -150,6 +150,93 @@ public class MagicAntics extends JavaPlugin {
         Bukkit.getServer().addRecipe(tomeRecipe);
     }
     
+        
+    /**
+     * Set the spells on a tome, changing the active spell only if necessary
+     * @pre isSpellTome(tome)
+     */
+    public void setSpells(ItemStack tome, List<Spell> spells) {
+        if ( spells.isEmpty() ) {
+            ItemMeta meta = tome.getItemMeta();
+            meta.setLore(new LinkedList<>());
+            tome.setItemMeta(meta);
+        } else {
+            Spell active = getActiveSpell(tome);
+            if (active == null || !spells.contains(active)) {
+                active = spells.get(0);
+            }
+            ItemMeta meta = tome.getItemMeta();
+            List<String> lore = new LinkedList<>();
+            lore.add(ChatColor.DARK_GRAY + "Active#" + active.getDisplayName());
+            for (Spell spell : spells) {
+                lore.add(spell.getDisplayName());
+            }
+            meta.setLore(lore);
+            tome.setItemMeta(meta);
+        }
+        
+    }
+
+    /**
+     * Return list of all spells on tome
+     * @pre isSpellTome(tome)
+     */
+    public List<Spell> getSpells(ItemStack tome) {
+        List<Spell> spells = new LinkedList<Spell>();
+        List<String> lines = tome.getItemMeta().getLore();
+        if ( lines == null )
+            return spells;
+        for (String line : lines.subList(1, lines.size())) {
+            spells.add(getSpellFromDisplayName(line));
+        }
+        return spells;
+    }
+
+    /**
+     * Return the active spell on tome
+     * @pre isSpellTome(tome)
+     */
+    public Spell getActiveSpell(ItemStack tome) {
+        List<String> lore = tome.getItemMeta().getLore();
+        if ( lore == null )
+            return null;
+        return getSpellFromDisplayName(lore.get(0).split("#")[1]);
+    }
+
+    /**
+     * Changes the active spell of tome to spell
+     * @pre isSpellTome(tome)
+     * @pre spell != null
+     */
+    public void setActiveSpell(ItemStack tome, Spell spell) {
+        ItemMeta meta = tome.getItemMeta();
+        List<String> lore = meta.getLore();
+        String active = ChatColor.DARK_GRAY + "Active#" + spell.getDisplayName();
+        if ( lore == null ) {
+            lore = new LinkedList<>();
+            lore.add(active);
+        } else {
+            lore.set(0, active);
+        }
+        meta.setLore(lore);
+        tome.setItemMeta(meta);
+    }
+
+    /**
+     * Return next spell
+     * @pre isSpellTome(tome)
+     * @returns null if tome is empty, otherwise the next spell on the list after active
+     */
+    public Spell getNextSpell(ItemStack tome) {
+        List<Spell> spells = getSpells(tome);
+        Spell active = getActiveSpell(tome);
+        for (int i = 0; i < spells.size(); i++) {
+            if (spells.get(i).equals(active))
+                return spells.get((i+1) % spells.size());
+        }
+        return null;
+    }
+    
     private final Spell[] spells;
     private static final String PLAYER_KNOWLEDGE_FILE = "playerknowledge.dat";
     private Map<UUID, Set<String>> learntSpells;

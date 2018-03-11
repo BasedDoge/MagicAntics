@@ -67,7 +67,7 @@ public class SpellSelecting implements Listener {
                     }
                 }
             }
-            setSpells(e.getPlayer().getItemInHand(), spells);
+            plugin.setSpells(e.getPlayer().getItemInHand(), spells);
         }
     }
     
@@ -160,7 +160,7 @@ public class SpellSelecting implements Listener {
                         inv.setItem(i, BARRIER_SLOT);
                         i++;
                     }
-                    for (Spell spell : getSpells(e.getPlayer().getItemInHand())) {
+                    for (Spell spell : plugin.getSpells(e.getPlayer().getItemInHand())) {
                         inv.setItem(i, ItemRules.createSpellBook(spell));
                         i++;
                     }
@@ -177,9 +177,9 @@ public class SpellSelecting implements Listener {
             ItemStack tome = p.getInventory().getItemInMainHand();
             if (ItemRules.isSpellTome(tome)) {
                 e.setCancelled(true);
-                Spell active = getNextSpell(tome);
+                Spell active = plugin.getNextSpell(tome);
                 if (active != null) {
-                    setActiveSpell(tome, active);
+                    plugin.setActiveSpell(tome, active);
                     p.sendTitle("", ChatColor.STRIKETHROUGH + "--"
                         + ChatColor.BOLD + ">"
                         + ChatColor.RESET + "  "
@@ -189,93 +189,6 @@ public class SpellSelecting implements Listener {
                 }
             }
         }
-    }
-
-    
-    /**
-     * Set the spells on a tome, changing the active spell only if necessary
-     * @pre isSpellTome(tome)
-     */
-    private void setSpells(ItemStack tome, List<Spell> spells) {
-        if ( spells.isEmpty() ) {
-            ItemMeta meta = tome.getItemMeta();
-            meta.setLore(new LinkedList<>());
-            tome.setItemMeta(meta);
-        } else {
-            Spell active = getActiveSpell(tome);
-            if (active == null || !spells.contains(active)) {
-                active = spells.get(0);
-            }
-            ItemMeta meta = tome.getItemMeta();
-            List<String> lore = new LinkedList<>();
-            lore.add(ChatColor.DARK_GRAY + "Active#" + active.getDisplayName());
-            for (Spell spell : spells) {
-                lore.add(spell.getDisplayName());
-            }
-            meta.setLore(lore);
-            tome.setItemMeta(meta);
-        }
-        
-    }
-
-    /**
-     * Return list of all spells on tome
-     * @pre isSpellTome(tome)
-     */
-    private List<Spell> getSpells(ItemStack tome) {
-        List<Spell> spells = new LinkedList<Spell>();
-        List<String> lines = tome.getItemMeta().getLore();
-        if ( lines == null )
-            return spells;
-        for (String line : lines.subList(1, lines.size())) {
-            spells.add(plugin.getSpellFromDisplayName(line));
-        }
-        return spells;
-    }
-
-    /**
-     * Return the active spell on tome
-     * @pre isSpellTome(tome)
-     */
-    private Spell getActiveSpell(ItemStack tome) {
-        List<String> lore = tome.getItemMeta().getLore();
-        if ( lore == null )
-            return null;
-        return plugin.getSpellFromDisplayName(lore.get(0).split("#")[1]);
-    }
-
-    /**
-     * Changes the active spell of tome to spell
-     * @pre isSpellTome(tome)
-     * @pre spell != null
-     */
-    private void setActiveSpell(ItemStack tome, Spell spell) {
-        ItemMeta meta = tome.getItemMeta();
-        List<String> lore = meta.getLore();
-        String active = ChatColor.DARK_GRAY + "Active#" + spell.getDisplayName();
-        if ( lore == null ) {
-            lore = new LinkedList<>();
-            lore.add(active);
-        } else {
-            lore.set(0, active);
-        }
-        meta.setLore(lore);
-        tome.setItemMeta(meta);
-    }
-
-    /**
-     * Return next spell
-     * @pre isSpellTome(tome)
-     * @returns null if tome is empty, otherwise the next spell on the list after active
-     */
-    private Spell getNextSpell(ItemStack tome) {
-        List<Spell> spells = getSpells(tome);
-        Spell active = getActiveSpell(tome);
-        for (int i = 0; i < spells.size(); i++) {
-            if (spells.get(i).equals(active))
-                return spells.get((i+1) % spells.size());
-        }
-        return null;
     }
 
 }
