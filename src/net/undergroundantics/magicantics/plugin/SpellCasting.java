@@ -28,7 +28,7 @@ public class SpellCasting implements Listener {
         ItemStack book = e.getPlayer().getInventory().getItemInMainHand();
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (ItemRules.isSpellTome(book) && e.getHand() == EquipmentSlot.HAND) {
-                if (e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
+                if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
                     return;
                 
                 e.setCancelled(true);
