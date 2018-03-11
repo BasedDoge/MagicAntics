@@ -44,7 +44,7 @@ public class Vindication implements Spell {
         List<LivingEntity> entList = new LinkedList();
         List<Entity> localMobsVindication = p.getNearbyEntities(10, 5, 10);
         for (Entity ent : localMobsVindication) {
-            if (ent instanceof LivingEntity && ent != p) {
+            if (ent instanceof LivingEntity) {
                 entList.add((LivingEntity) ent);
             }
         }
