@@ -1,4 +1,4 @@
-package net.undergroundantics.magicantics.spells;
+package net.undergroundantics.magicantics.plugin;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -10,5 +10,6 @@ public interface Spell {
     public String getName();
     public String getDisplayName();
     public long getCooldown();
+    public boolean isLearnable();
 
 }

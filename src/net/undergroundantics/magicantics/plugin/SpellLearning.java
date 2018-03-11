@@ -1,6 +1,5 @@
 package net.undergroundantics.magicantics.plugin;
 
-import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;

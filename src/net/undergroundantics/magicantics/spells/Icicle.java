@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -34,6 +35,11 @@ public class Icicle implements Spell {
     @Override
     public long getCooldown() {
         return COOLDOWN;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return true;
     }
 
     public Icicle(Plugin plugin) {

@@ -1,7 +1,6 @@
 package net.undergroundantics.magicantics.commands;
 
 import net.undergroundantics.magicantics.plugin.*;
-import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +28,7 @@ public class MagicAnticsCommandExecutor implements CommandExecutor{
         } else if (cmd.getName().equalsIgnoreCase("spellbook")) {
             if (args.length == 1 && sender instanceof Player) {
                 Spell spell = plugin.getSpellFromName(args[0]);
-                if (spell != null) {
+                if (spell != null && spell.isLearnable()) {
                     Player p = (Player) sender;
                     p.getInventory().addItem(ItemRules.createSpellBook(spell));
                     doCmd = true;

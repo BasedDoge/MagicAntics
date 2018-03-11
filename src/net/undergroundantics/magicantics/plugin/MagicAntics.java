@@ -39,8 +39,21 @@ public class MagicAntics extends JavaPlugin {
                  new Familiar(this), new Vindication(this), new Atomiser(), new Phase()};
     }
     
-    public Spell[] getSpells() {
-        return spells;
+    public List<Spell> getSpells() {
+        List<Spell> list = new LinkedList<>();
+        for (Spell spell : spells) {
+            list.add(spell);
+        }
+        return list;
+    }
+
+    public List<Spell> getLearnableSpells() {
+        List<Spell> list = new LinkedList<>();
+        for (Spell spell : spells) {
+            if (spell.isLearnable())
+                list.add(spell);
+        }
+        return list;
     }
 
     public Spell getSpellFromName(String name) {
@@ -78,7 +91,6 @@ public class MagicAntics extends JavaPlugin {
         getCommand("spelltome").setExecutor(ce);
         getCommand("spellbook").setTabCompleter(tc);
         getCommand("spellscroll").setTabCompleter(tc);
-        getCommand("spelltome").setTabCompleter(tc);
         this.registerSpellTomeRecipe();
         readPlayerKnowledge();
     }

@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -29,6 +30,11 @@ public class Thunderstorm implements Spell {
     @Override
     public long getCooldown() {
         return COOLDOWN;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return true;
     }
 
     @Override

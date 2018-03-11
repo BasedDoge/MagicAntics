@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
+
 
 public class Atomiser implements Spell {
 
@@ -29,6 +31,11 @@ public class Atomiser implements Spell {
     @Override
     public long getCooldown() {
         return COOLDOWN;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return true;
     }
 
     @Override

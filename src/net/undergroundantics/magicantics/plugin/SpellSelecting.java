@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,25 +13,47 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class SpellSelecting implements Listener {
 
     private MagicAntics plugin;
     
     private static final String SPELL_INVENTORY_TITLE = "Equip Spells";
-    private static final ItemStack BARRIER_SLOT = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)15);
+    private static final int ROW_SIZE = 9;
+    private static final int NUM_EQUIP_ROWS = 1;
+    private static final ItemStack BARRIER_SLOT;
+    private static final ItemStack EMPTY_EQUIP_SLOT;
+    private static final ItemStack UNKNOWN_SLOT;
+    static {
+        BARRIER_SLOT     = new ItemStack(Material.THIN_GLASS, 1);
+        EMPTY_EQUIP_SLOT = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)13);
+        UNKNOWN_SLOT     = new ItemStack(Material.BARRIER, 1);
+        ItemMeta meta;
+        meta = BARRIER_SLOT.getItemMeta();
+        meta.setDisplayName(" ");
+        BARRIER_SLOT.setItemMeta(meta);
+        meta = EMPTY_EQUIP_SLOT.getItemMeta();
+        meta.setDisplayName("Available Spell Slot");
+        EMPTY_EQUIP_SLOT.setItemMeta(meta);
+        meta = UNKNOWN_SLOT.getItemMeta();
+        meta.setDisplayName("Unknown spell");
+        UNKNOWN_SLOT.setItemMeta(meta);
+    }
+    private final int NUM_LEARNABLE_SPELLS;
+    private final int NUM_LIBRARY_ROWS;
 
     public SpellSelecting(MagicAntics plugin) {
         this.plugin = plugin;
+        NUM_LEARNABLE_SPELLS = plugin.getLearnableSpells().size();
+        int n = NUM_LEARNABLE_SPELLS;
+        int r = ROW_SIZE;
+        NUM_LIBRARY_ROWS = (n % r == 0) ? n / r : 1 + (n / r);
     }
  
     private boolean isSpellInventory(Inventory inv) {
@@ -40,11 +61,19 @@ public class SpellSelecting implements Listener {
     }
 
     private boolean isSpellEquipSlot(int i) {
-        return i >= 3*9;
+        return i >= (NUM_LIBRARY_ROWS + 1) * ROW_SIZE;
     }
     
     private boolean isSpellLibrarySlot(int i) {
-        return i < 2*9;
+        return i < NUM_LIBRARY_ROWS * ROW_SIZE;
+    }
+
+    private int equipSlotBegin() {
+        return (NUM_LIBRARY_ROWS + 1) * ROW_SIZE;
+    }
+    
+    private int equipSlotEnd() {
+        return (NUM_LIBRARY_ROWS + 1 + NUM_EQUIP_ROWS) * ROW_SIZE;
     }
 
     private Spell spellFromSpellBook(ItemStack book) {
@@ -56,7 +85,7 @@ public class SpellSelecting implements Listener {
         if (isSpellInventory(e.getInventory())) {
             List<Spell> spells = new LinkedList<>();
             Set<String> seen = new TreeSet<>();
-            for (int i = 3*9; i < 4*9; i++) {
+            for (int i = equipSlotBegin(); i < equipSlotEnd(); i++) {
                 ItemStack item = e.getInventory().getItem(i);
                 if ( ItemRules.isSpellBook(item) ) {
                     Spell spell = spellFromSpellBook(item);
@@ -69,73 +98,25 @@ public class SpellSelecting implements Listener {
             plugin.setSpells(e.getPlayer().getItemInHand(), spells);
         }
     }
-    
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerDropItemEvent(PlayerDropItemEvent e) {
-        if (e.getPlayer().getOpenInventory() != null && isSpellInventory(e.getPlayer().getOpenInventory().getTopInventory())) {
-            e.setCancelled(true);
-        }
-    }
-            
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onInventoryDrag(InventoryDragEvent e) {
-        if (isSpellInventory(e.getInventory())) {
-            if ( e.getInventorySlots().size() == 1 ) {
-                int slot = e.getInventorySlots().iterator().next();
-                ItemStack book = e.getNewItems().get(slot);
-                if ( ! isSpellEquipSlot(slot) ) {
-                    e.setCancelled(true);
-                }
-            } else {
-                e.setCancelled(true);
-            }
-        }
-    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEditSpellTome(InventoryClickEvent e) {
-        if (isSpellInventory(e.getInventory())) {
-            if (isSpellInventory(e.getClickedInventory())) {
-                Inventory spellInv = e.getClickedInventory();
-                switch (e.getAction()) {
-                    case PICKUP_ALL:
-                    case PICKUP_HALF:
-                    case PICKUP_SOME:
-                    case PICKUP_ONE:
-                        if ( isSpellEquipSlot(e.getSlot()) ) {
-                            
-                        } else if ( e.getCurrentItem().getType() == Material.BOOK ) {
-                            e.setCursor(e.getCurrentItem());
-                        } else {
-                            e.setCancelled(true);
+        Inventory inv = e.getView().getTopInventory();
+        if ( isSpellInventory(inv) ) {
+            e.setCancelled(true);
+            if ( e.getClickedInventory() == inv ) {     
+                if ( ItemRules.isSpellBook(e.getCurrentItem()) ) {
+                    if ( isSpellEquipSlot(e.getSlot())) {
+                        e.getInventory().setItem(e.getSlot(), null);
+                    } else {
+                        for (int i = equipSlotBegin(); i < equipSlotEnd(); i++) {
+                            if (e.getInventory().getItem(i) == null) {
+                                e.getInventory().setItem(i, e.getCurrentItem());
+                                break;
+                            }
                         }
-                        break;
-                    case SWAP_WITH_CURSOR:
-                        if ( ! isSpellEquipSlot(e.getSlot())) {
-                            e.setCancelled(true);
-                        }
-                        break;
-                    case PLACE_ALL:
-                    case PLACE_SOME:
-                    case PLACE_ONE:
-                        plugin.getLogger().log(Level.SEVERE, "place: " + e.getAction().toString());
-                        if ( ! isSpellEquipSlot(e.getSlot()) ) {
-                            e.setCurrentItem(null);
-                            e.setCancelled(false);
-                        }
-                        break;
-                    case NOTHING:
-                        break;
-                    default:
-                        e.setCancelled(true);
-                        break;
+                    }
                 }
-            } else if (e.getClickedInventory() == null && e.getAction() == InventoryAction.DROP_ALL_CURSOR) {
-                e.setCursor(null);
-                e.setCancelled(true);
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -147,7 +128,7 @@ public class SpellSelecting implements Listener {
             ItemStack tome = p.getInventory().getItemInMainHand();
             if (ItemRules.isSpellTome(tome)) {
                 e.setCancelled(true);
-                Inventory inv = Bukkit.createInventory(null, 36, SPELL_INVENTORY_TITLE);
+                Inventory inv = Bukkit.createInventory(null, (NUM_LIBRARY_ROWS + 1 + NUM_EQUIP_ROWS) * ROW_SIZE, SPELL_INVENTORY_TITLE);
                 inv.setMaxStackSize(1);
                 {
                     int i = 0;
@@ -155,7 +136,12 @@ public class SpellSelecting implements Listener {
                         inv.setItem(i, ItemRules.createSpellBook(spell));
                         i++;
                     }
-                    while (i < 3*9) {
+                    while (i < NUM_LEARNABLE_SPELLS) {
+                        inv.setItem(i, UNKNOWN_SLOT);
+                        i++;
+                    }
+                    i = NUM_LIBRARY_ROWS * ROW_SIZE;
+                    while (i < (NUM_LIBRARY_ROWS + 1) * ROW_SIZE) {
                         inv.setItem(i, BARRIER_SLOT);
                         i++;
                     }

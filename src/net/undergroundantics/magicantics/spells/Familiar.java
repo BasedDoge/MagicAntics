@@ -1,8 +1,9 @@
 package net.undergroundantics.magicantics.spells;
 
-import net.md_5.bungee.api.ChatColor;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
+import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Egg;
@@ -34,6 +35,11 @@ public class Familiar implements Spell{
     @Override
     public long getCooldown() {
         return COOLDOWN;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return true;
     }
 
     public Familiar(Plugin plugin) {

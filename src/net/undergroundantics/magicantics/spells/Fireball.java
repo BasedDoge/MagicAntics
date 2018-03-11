@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -24,6 +25,11 @@ public class Fireball implements Spell {
     @Override
     public long getCooldown() {
         return COOLDOWN;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return true;
     }
 
     @Override

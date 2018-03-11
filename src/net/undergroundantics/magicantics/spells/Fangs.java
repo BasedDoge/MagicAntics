@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -33,6 +34,10 @@ public class Fangs implements Spell {
         return DISPLAY_NAME;
     }
 
+    @Override
+    public boolean isLearnable() {
+        return true;
+    }
 
     @Override
     public long getCooldown() {

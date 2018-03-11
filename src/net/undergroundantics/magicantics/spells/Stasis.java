@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import java.util.LinkedList;
 import java.util.List;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
@@ -42,6 +43,11 @@ public class Stasis implements Spell {
 
     public Stasis(Plugin plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public boolean isLearnable() {
+        return true;
     }
 
     @Override

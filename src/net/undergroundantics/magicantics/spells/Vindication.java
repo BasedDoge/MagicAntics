@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import net.undergroundantics.magicantics.plugin.Spell;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -33,7 +34,12 @@ public class Vindication implements Spell {
     public long getCooldown() {
         return COOLDOWN;
     }
-   
+
+    @Override
+    public boolean isLearnable() {
+        return true;
+    }
+
     public Vindication(Plugin plugin) {
         this.plugin = plugin;
     }
