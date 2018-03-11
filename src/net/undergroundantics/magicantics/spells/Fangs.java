@@ -8,6 +8,7 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.EvokerFangs;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -23,7 +24,7 @@ public class Fangs implements Spell {
     public Fangs(Plugin plugin) {
         this.plugin = plugin;
     }
-    
+
     @Override
     public String getName() {
         return NAME;
@@ -54,18 +55,19 @@ public class Fangs implements Spell {
             if (l.getY() >= p.getLocation().getY() - VRANGE && l.getY() <= p.getLocation().getY() + VRANGE) {
                 EvokerFangs f = (EvokerFangs) p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                    for (Entity ent : f.getNearbyEntities(0.5, 0.5, 0.5)){
-                        if(ent instanceof Item && ent.getWorld() == p.getWorld()){
-                            ent.teleport(p);
-                            p.getWorld().spawnParticle(Particle.SPIT, p.getLocation(), 1, 0.2, 0.2, 0.2, 0.1);
+                    for (Entity ent : f.getNearbyEntities(0.5, 0.5, 0.5)) {
+                        if (ent instanceof Item || ent instanceof ExperienceOrb) {
+                            if (ent.getWorld() == p.getWorld()) {
+                                ent.teleport(p);
+                                p.getWorld().spawnParticle(Particle.SPIT, p.getLocation(), 1, 0.2, 0.2, 0.2, 0.1);
+                            }
                         }
                     }
-                f.remove();
-        }, 15);
-            }
-            else {
+                    f.remove();
+                }, 15);
+            } else {
                 failCount++;
-                if (failCount == RANGE){
+                if (failCount == RANGE) {
                     castSuccess = false;
                 }
             }
