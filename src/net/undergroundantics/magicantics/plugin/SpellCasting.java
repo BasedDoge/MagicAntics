@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.UUID;
 import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,10 +28,11 @@ public class SpellCasting implements Listener {
         ItemStack book = e.getPlayer().getInventory().getItemInMainHand();
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (ItemRules.isSpellTome(book) && e.getHand() == EquipmentSlot.HAND) {
-                e.setCancelled(true);
-
-                Player p = e.getPlayer();
+                if (e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
+                    return;
                 
+                e.setCancelled(true);
+                Player p = e.getPlayer();
                 Spell spell;
                 List<String> lore = book.getItemMeta().getLore();
                 if (lore.size() > 1) {
