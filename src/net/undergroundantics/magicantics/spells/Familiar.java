@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 public class Familiar implements Spell{
 
     private static final String NAME = "Familiar";
-    private static final String DISPLAY_NAME = "&aFamiliar";
+    private static final String DISPLAY_NAME = ChatColor.GREEN + NAME;
     private static final long COOLDOWN = 45;
 
     @Override

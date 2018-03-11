@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import net.md_5.bungee.api.ChatColor;
 import net.undergroundantics.magicantics.spells.Spell;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,8 +25,8 @@ public class SpellCasting implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onCast(PlayerInteractEvent e) {
         ItemStack book = e.getPlayer().getInventory().getItemInMainHand();
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
-            if (ItemRules.SpellTomeCheck(book) && e.getHand() == EquipmentSlot.HAND) {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (ItemRules.isSpellTome(book) && e.getHand() == EquipmentSlot.HAND) {
                 e.setCancelled(true);
 
                 Player p = e.getPlayer();
@@ -34,7 +34,7 @@ public class SpellCasting implements Listener {
                 Spell spell;
                 List<String> lore = book.getItemMeta().getLore();
                 if (lore.size() > 1) {
-                   spell = plugin.getSpell(ChatColor.stripColor(lore.get(0).split("#")[1]));
+                   spell = plugin.getSpellFromDisplayName(lore.get(0).split("#")[1]);
                    if (spell == null)
                         return;
                 } else {
@@ -59,7 +59,8 @@ public class SpellCasting implements Listener {
                 }
             }
         }
-    
+    }
+
     private class CooldownKey {
         public CooldownKey(Player player, Spell spell) {
             this.player = player.getUniqueId();

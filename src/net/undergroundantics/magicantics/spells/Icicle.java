@@ -1,6 +1,7 @@
 package net.undergroundantics.magicantics.spells;
 
 import net.undergroundantics.magicantics.plugin.MagicAntics;
+import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -17,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Icicle implements Spell {
 
     private static final String NAME = "Icicle";
-    private static final String DISPLAY_NAME = "&bIcicle";
+    private static final String DISPLAY_NAME = ChatColor.AQUA + NAME;
     private static final long COOLDOWN = 1;
 
     @Override

@@ -1,10 +1,20 @@
 name: MagicAntics
 main: net.undergroundantics.magicantics.plugin.MagicAntics
-version: 1.0
+version: 0.2
 authors: [Isaac, Dxyze]
 commands:
-   NewSpell:
-      description: Gives spells to be added to spellbooks.
-      usage: /NewSpell <spell> [Use tab completion]
-      permission: MagicAntics.NewSpell
+   spellscroll:
+      description: Gives spell scroll.
+      usage: /spellscroll <spell> [Use tab completion]
+      permission: magicantics.spawn.scroll
+      permission-message: You don't have permission to give yourself items.
+   spellbook:
+      description: Gives spell book.
+      usage: /spellbook <spell> [Use tab completion]
+      permission: magicantics.spawn.book
+      permission-message: You don't have permission to give yourself items.
+   spelltome:
+      description: Gives spell tome.
+      usage: /spelltome
+      permission: magicantics.spawn.tome
       permission-message: You don't have permission to give yourself items.

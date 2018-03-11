@@ -2,6 +2,7 @@ package net.undergroundantics.magicantics.spells;
 
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -19,7 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Stasis implements Spell {
 
     private static final String NAME = "Stasis";
-    private static final String DISPLAY_NAME = "&1Stasis";
+    private static final String DISPLAY_NAME = ChatColor.DARK_BLUE + NAME;
     private static final long COOLDOWN = 60;
 
     @Override

@@ -1,6 +1,7 @@
 package net.undergroundantics.magicantics.spells;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -13,7 +14,7 @@ import org.bukkit.plugin.Plugin;
 public class Fangs implements Spell {
 
     private static final String NAME = "Fangs";
-    private static final String DISPLAY_NAME = "&7Fangs";
+    private static final String DISPLAY_NAME = ChatColor.GRAY + NAME;
     private static final long COOLDOWN = 5;
 
     public Fangs(Plugin plugin) {

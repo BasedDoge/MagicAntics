@@ -1,6 +1,7 @@
 package net.undergroundantics.magicantics.spells;
 
 import java.util.List;
+import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
 public class Thunderstorm implements Spell {
 
     private static final String NAME = "Thunderstorm";
-    private static final String DISPLAY_NAME = "&eThunderstorm";
+    private static final String DISPLAY_NAME = ChatColor.YELLOW + NAME;
     private static final long COOLDOWN = 45;
 
     @Override

@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
@@ -7,7 +8,7 @@ import org.bukkit.entity.SmallFireball;
 public class Fireball implements Spell {
 
     private static final String NAME = "Fireball";
-    private static final String DISPLAY_NAME = "&cFireball";
+    private static final String DISPLAY_NAME = ChatColor.RED + NAME;
     private static final long COOLDOWN = 1;
 
     @Override

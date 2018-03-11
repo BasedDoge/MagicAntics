@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class Atomiser implements Spell {
 
     private static final String NAME = "Atomiser";
-    private static final String DISPLAY_NAME = "&dAtomiser";
+    private static final String DISPLAY_NAME = ChatColor.LIGHT_PURPLE + NAME;
     private static final long COOLDOWN = 15;
 
     @Override
