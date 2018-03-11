@@ -184,7 +184,7 @@ public class MagicAntics extends JavaPlugin {
     public List<Spell> getSpells(ItemStack tome) {
         List<Spell> spells = new LinkedList<Spell>();
         List<String> lines = tome.getItemMeta().getLore();
-        if ( lines == null )
+        if ( lines == null || lore.isEmpty() )
             return spells;
         for (String line : lines.subList(1, lines.size())) {
             spells.add(getSpellFromDisplayName(line));
@@ -198,7 +198,7 @@ public class MagicAntics extends JavaPlugin {
      */
     public Spell getActiveSpell(ItemStack tome) {
         List<String> lore = tome.getItemMeta().getLore();
-        if ( lore == null )
+        if ( lore == null || lore.isEmpty() )
             return null;
         return getSpellFromDisplayName(lore.get(0).split("#")[1]);
     }
@@ -214,6 +214,8 @@ public class MagicAntics extends JavaPlugin {
         String active = ChatColor.DARK_GRAY + "Active#" + spell.getDisplayName();
         if ( lore == null ) {
             lore = new LinkedList<>();
+        }
+        if ( lore.isEmpty() ) {
             lore.add(active);
         } else {
             lore.set(0, active);
