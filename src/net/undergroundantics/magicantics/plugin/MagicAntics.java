@@ -184,7 +184,7 @@ public class MagicAntics extends JavaPlugin {
     public List<Spell> getSpells(ItemStack tome) {
         List<Spell> spells = new LinkedList<Spell>();
         List<String> lines = tome.getItemMeta().getLore();
-        if ( lines == null || lore.isEmpty() )
+        if ( lines == null || lines.isEmpty() )
             return spells;
         for (String line : lines.subList(1, lines.size())) {
             spells.add(getSpellFromDisplayName(line));
