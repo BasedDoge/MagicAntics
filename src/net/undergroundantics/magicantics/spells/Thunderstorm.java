@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -33,7 +34,12 @@ public class Thunderstorm implements Spell {
     @Override
     public boolean cast(Player p) {
         boolean castSuccess = false;
-        List<Entity> localMobsStorm = p.getNearbyEntities(6, 2, 6);
+        List<Entity> localMobsStorm = new LinkedList();
+        for (Entity ent : p.getNearbyEntities(6, 2, 6)) {
+            if (ent instanceof LivingEntity) {
+                localMobsStorm.add((LivingEntity) ent);
+            }
+        }
         for (Entity mob : localMobsStorm) {
             if (mob instanceof LivingEntity && p.hasLineOfSight(mob)) {
                 mob.getWorld().strikeLightning(mob.getLocation().add(0, 1, 0));

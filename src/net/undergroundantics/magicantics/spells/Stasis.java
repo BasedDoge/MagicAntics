@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import java.util.LinkedList;
 import java.util.List;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import org.bukkit.Bukkit;
@@ -46,16 +47,19 @@ public class Stasis implements Spell {
     @Override
     public boolean cast(Player p) {
         boolean castSuccess = false;
-        List<Entity> localMobsStasis = p.getNearbyEntities(6, 2, 6);
-        for (Entity e : localMobsStasis) {
-            if (e instanceof LivingEntity) {
-                ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
-                stasisProj.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
-                stasisProj.setVelocity(stasisProj.getVelocity().multiply(2));
-                stasisProj.setShooter(p);
-                stasisProj.setTarget(e);
-                stasisProj.setBounce(true);
+        List<Entity> localMobsStasis = new LinkedList();
+        for (Entity ent : p.getNearbyEntities(6, 2, 6)) {
+            if (ent instanceof LivingEntity) {
+                localMobsStasis.add((LivingEntity) ent);
             }
+        }
+        for (Entity e : localMobsStasis) {
+            ShulkerBullet stasisProj = p.launchProjectile(ShulkerBullet.class);
+            stasisProj.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
+            stasisProj.setVelocity(stasisProj.getVelocity().multiply(2));
+            stasisProj.setShooter(p);
+            stasisProj.setTarget(e);
+            stasisProj.setBounce(true);
         }
         if (localMobsStasis.isEmpty()) {
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);

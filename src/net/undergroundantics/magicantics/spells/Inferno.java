@@ -1,5 +1,6 @@
 package net.undergroundantics.magicantics.spells;
 
+import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -33,7 +34,12 @@ public class Inferno implements Spell {
     @Override
     public boolean cast(Player p) {
         boolean castSuccess = false;
-        List<Entity> localMobsInferno = p.getNearbyEntities(6, 2, 6);
+        List<Entity> localMobsInferno = new LinkedList();
+        for (Entity ent : p.getNearbyEntities(6, 2, 6)) {
+            if (ent instanceof LivingEntity) {
+                localMobsInferno.add((LivingEntity) ent);
+            }
+        }
         p.getWorld().spawnParticle(Particle.FLAME, p.getEyeLocation(), 30, 4, 1, 4, 0.2);
         p.getWorld().spawnParticle(Particle.LAVA, p.getEyeLocation(), 8, 2, 0.5, 2, 0.1);
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.PLAYERS, 0.5f, 0.0f);

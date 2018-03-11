@@ -41,22 +41,21 @@ public class Vindication implements Spell {
     @Override
     public boolean cast(Player p) {
         boolean castSuccess = false;
-        List<LivingEntity> entList = new LinkedList();
-        List<Entity> localMobsVindication = p.getNearbyEntities(10, 5, 10);
-        for (Entity ent : localMobsVindication) {
+        List<LivingEntity> localMobsVindication = new LinkedList();
+        for (Entity ent : p.getNearbyEntities(10, 5, 10)) {
             if (ent instanceof LivingEntity) {
-                entList.add((LivingEntity) ent);
+                localMobsVindication.add((LivingEntity) ent);
             }
         }
-        if (entList.size() > 0) {
+        if (localMobsVindication.size() > 0) {
             castSuccess = true;
             for (int i = 0; i < 6; i++) {
                 Random rand = new Random();
-                int n = rand.nextInt(entList.size());
+                int n = rand.nextInt(localMobsVindication.size());
                 Vex vex = (Vex) p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
                 
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                    vex.setTarget(entList.get(n));
+                    vex.setTarget(localMobsVindication.get(n));
                 }, 20);
                 
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
