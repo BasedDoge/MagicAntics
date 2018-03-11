@@ -1,8 +1,6 @@
 package net.undergroundantics.magicantics.plugin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import net.undergroundantics.magicantics.spells.Spell;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
