@@ -99,7 +99,7 @@ public class SpellSelecting implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onEditSpellTome(InventoryClickEvent e) {
         Inventory inv = e.getView().getTopInventory();
         if ( isSpellInventory(inv) ) {
@@ -121,7 +121,7 @@ public class SpellSelecting implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onOpenSpellTome(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE) {
             Player p = e.getPlayer();
