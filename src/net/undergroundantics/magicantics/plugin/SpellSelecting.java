@@ -107,10 +107,10 @@ public class SpellSelecting implements Listener {
             if ( e.getClickedInventory() == inv ) {     
                 if ( ItemRules.isSpellBook(e.getCurrentItem()) ) {
                     if ( isSpellEquipSlot(e.getSlot())) {
-                        e.getInventory().setItem(e.getSlot(), null);
+                        e.getInventory().setItem(e.getSlot(), EMPTY_EQUIP_SLOT);
                     } else {
                         for (int i = equipSlotBegin(); i < equipSlotEnd(); i++) {
-                            if (e.getInventory().getItem(i) == null) {
+                            if (e.getInventory().getItem(i).equals(EMPTY_EQUIP_SLOT)) {
                                 e.getInventory().setItem(i, e.getCurrentItem());
                                 break;
                             }
@@ -147,6 +147,10 @@ public class SpellSelecting implements Listener {
                     }
                     for (Spell spell : plugin.getSpells(e.getPlayer().getItemInHand())) {
                         inv.setItem(i, ItemRules.createSpellBook(spell));
+                        i++;
+                    }
+                    while (i < equipSlotEnd()) {
+                        inv.setItem(i, EMPTY_EQUIP_SLOT);
                         i++;
                     }
                 }
