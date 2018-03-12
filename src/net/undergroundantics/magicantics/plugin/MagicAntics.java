@@ -74,6 +74,21 @@ public class MagicAntics extends JavaPlugin {
         return null;
     }
 
+    /**
+     * @pre ItemRules.isSpellScroll(item)
+     */
+    public Spell getSpellFromSpellScroll(ItemStack item) {
+        return getSpellFromDisplayName(item.getItemMeta().getLore().get(0));
+    }
+    
+    /**
+     * @pre ItemRules.isSpellBook(item)
+     */
+    public Spell getSpellFromSpellBook(ItemStack item) {
+        return getSpellFromDisplayName(item.getItemMeta().getLore().get(0));
+    }
+    
+    
     public static void sendMessage(Player p, String msg) {
         p.sendMessage(ChatColor.DARK_GRAY + ""
                 + ""
@@ -256,7 +271,7 @@ public class MagicAntics extends JavaPlugin {
         }
         return null;
     }
-    
+
     private final Spell[] spells;
     private static final String PLAYER_KNOWLEDGE_FILE = "playerknowledge.dat";
     private Map<UUID, Set<String>> learntSpells;

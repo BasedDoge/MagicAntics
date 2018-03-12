@@ -20,13 +20,13 @@ public class SpellLearning implements Listener {
 
     private final MagicAntics plugin;
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void learnSpellBook(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             ItemStack spellBook = e.getPlayer().getInventory().getItemInMainHand();
             if (ItemRules.isSpellBook(spellBook)) {
                 e.setCancelled(true);
-                Spell spell = plugin.getSpellFromDisplayName(spellBook.getItemMeta().getLore().get(0));
+                Spell spell = plugin.getSpellFromSpellBook(spellBook);
                 Player p = e.getPlayer();
                 if ( ! plugin.hasLearntSpell(p, spell) ) {
                     plugin.learnSpell(p, spell);

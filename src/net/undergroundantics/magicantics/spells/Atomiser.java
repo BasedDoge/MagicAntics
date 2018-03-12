@@ -1,6 +1,7 @@
 package net.undergroundantics.magicantics.spells;
 
 import net.undergroundantics.magicantics.plugin.Spell;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,8 +9,8 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
-import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 
 
 public class Atomiser implements Spell {
@@ -17,6 +18,12 @@ public class Atomiser implements Spell {
     private static final String NAME = "Atomiser";
     private static final String DISPLAY_NAME = ChatColor.LIGHT_PURPLE + NAME;
     private static final long COOLDOWN = 15;
+
+    private static final Material[] FORBIDDEN_TYPES = 
+        { Material.BEDROCK, Material.BARRIER, Material.ENDER_PORTAL_FRAME,
+          Material.COMMAND, Material.COMMAND_CHAIN, Material.COMMAND_REPEATING,
+          Material.STRUCTURE_BLOCK, Material.STRUCTURE_VOID
+        };
 
     @Override
     public String getName() {
@@ -38,27 +45,43 @@ public class Atomiser implements Spell {
         return true;
     }
 
+    private boolean isForbidden(Material m1) {
+        for ( Material m2 : FORBIDDEN_TYPES ) {
+            if ( m1 == m2 )
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean cast(Player p) {
-        boolean castSuccess = false;
-        Block tBlock = p.getTargetBlock(null, 64);
-        double dist = p.getLocation().distance(tBlock.getLocation());
-        double h = ((tBlock.getLocation().getY()) - (p.getLocation().getY()) ) / dist;
+        Block block = p.getTargetBlock(null, 64);
+
+        double dist = p.getLocation().distance(block.getLocation());
+        double h = ((block.getLocation().getY()) - (p.getLocation().getY()) ) / dist;
         
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         for (int i = 0; i <= dist; i++) {
             Location loc = p.getLocation().add(p.getLocation().getDirection().setY(h).normalize().multiply(i));
             p.getWorld().spawnParticle(Particle.REDSTONE, loc, 0, -0.3, 0, 0.5, 1);
         }
-        
-        if (tBlock.getState() instanceof Container || tBlock.getType() == Material.BEDROCK) {
-            p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, tBlock.getLocation(), 5, 0.5, 0.5, 0.5, 0.1);
+       
+        boolean broken = false;
+
+        if ( ! isForbidden(block.getType()) ) { 
+            BlockBreakEvent event = new BlockBreakEvent(block, p);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+            if ( ! event.isCancelled() ) {
+                block.breakNaturally(null);
+                broken = true;
+            }
         }
-        else{
-            p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tBlock.getLocation(), 5, 1, 1, 1, 0.1);
-            tBlock.breakNaturally(null);
-            castSuccess = true;
+
+        if ( broken ) {      
+            p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 5, 1, 1, 1, 0.1);
+        } else {
+            p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, block.getLocation(), 5, 0.5, 0.5, 0.5, 0.1);
         }
-        return castSuccess;
+        return broken;
     }
 }
