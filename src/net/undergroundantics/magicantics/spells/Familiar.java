@@ -15,8 +15,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
-
-public class Familiar implements Spell{
+public class Familiar implements Spell {
 
     private static final String NAME = "Familiar";
     private static final String DISPLAY_NAME = ChatColor.GREEN + NAME;
@@ -58,22 +57,21 @@ public class Familiar implements Spell{
 
     @Override
     public void onHit(ProjectileHitEvent e) {
-        Wolf wolf = (Wolf)e.getEntity().getWorld().spawnEntity(e.getEntity().getLocation(), EntityType.WOLF);
-        wolf.setOwner((Player)e.getEntity().getShooter());
+        Wolf wolf = (Wolf) e.getEntity().getWorld().spawnEntity(e.getHitEntity().getLocation(), EntityType.WOLF);
+        wolf.setOwner((Player) e.getEntity().getShooter());
         wolf.setHealth(20);
         wolf.setCustomName(ChatColor.GREEN + "Wolf Familiar");
         wolf.setCollarColor(DyeColor.GREEN);
-        
+
+        if (e.getHitEntity() instanceof LivingEntity) {
+            wolf.setTarget((LivingEntity) e.getHitEntity());
+        }
+
         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
             wolf.getWorld().spawnParticle(Particle.CLOUD, wolf.getLocation(), 10, 0.2, 0.2, 0.2, 0.2);
             wolf.remove();
         }, 500);
-        
-        if (e.getHitEntity() instanceof LivingEntity){
-            wolf.setAngry(true);
-            wolf.setTarget((LivingEntity) e.getHitEntity());
-        }
     }
-    
+
     private final Plugin plugin;
 }
