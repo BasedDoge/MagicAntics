@@ -33,7 +33,7 @@ public class SpellLearning implements Listener {
                     if (!plugin.hasLearntSpell(p, spell)) {
                         plugin.learnSpell(p, spell);
                         spellBook.setAmount(spellBook.getAmount() - 1);
-                        p.sendTitle(ChatColor.ITALIC + "" + ChatColor.GRAY + "New Spell Unlocked:", spell.getDisplayName(), 10, 40, 20);
+                        p.sendTitle(ChatColor.ITALIC + "" + ChatColor.GRAY + "New Spell Unlocked", spell.getDisplayName(), 10, 40, 20);
                         p.getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 0.5f, 0.0f);
                         p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, p.getEyeLocation(), 50, 0.25, 0.25, 0.25, 1);
                     } else {
