@@ -75,7 +75,13 @@ public class MagicAntics extends JavaPlugin {
     }
 
     public static void sendMessage(Player p, String msg) {
-        p.sendMessage("[Spellbook] " + msg);
+        p.sendMessage(ChatColor.DARK_GRAY + ""
+                + ""
+                + "[" + ChatColor.RESET 
+                + ChatColor.GOLD +
+                "Spellbook" +
+                ChatColor.DARK_GRAY +
+                "] " + ChatColor.RESET + msg);
     }
 
     @Override

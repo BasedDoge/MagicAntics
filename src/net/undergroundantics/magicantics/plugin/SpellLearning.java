@@ -35,7 +35,7 @@ public class SpellLearning implements Listener {
                     p.getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 0.5f, 0.0f);
                     p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, p.getEyeLocation(), 50, 0.25, 0.25, 0.25, 1);
                 } else {
-                    MagicAntics.sendMessage(p, ChatColor.GRAY + "You've already unlocked this spell.");
+                    MagicAntics.sendMessage(p, ChatColor.GRAY + "You already know this spell.");
                 }
 
             }
