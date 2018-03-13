@@ -19,7 +19,7 @@ public class Familiar implements Spell {
 
     private static final String NAME = "Familiar";
     private static final String DISPLAY_NAME = ChatColor.GREEN + NAME;
-    private static final long COOLDOWN = 45;
+    private static final long COOLDOWN = 40;
 
     @Override
     public String getName() {

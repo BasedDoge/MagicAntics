@@ -24,7 +24,7 @@ public class Stasis implements Spell {
 
     private static final String NAME = "Stasis";
     private static final String DISPLAY_NAME = ChatColor.DARK_BLUE + NAME;
-    private static final long COOLDOWN = 60;
+    private static final long COOLDOWN = 30;
 
     @Override
     public String getName() {

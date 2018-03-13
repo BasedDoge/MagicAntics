@@ -15,7 +15,7 @@ public class Thunderstorm implements Spell {
 
     private static final String NAME = "Thunderstorm";
     private static final String DISPLAY_NAME = ChatColor.YELLOW + NAME;
-    private static final long COOLDOWN = 45;
+    private static final long COOLDOWN = 30;
 
     @Override
     public String getName() {

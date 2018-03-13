@@ -15,7 +15,7 @@ public class Phase implements Spell {
     private static final String NAME = "Phase";
     private static final String DISPLAY_NAME = ChatColor.BLUE + NAME;
 
-    private static final int COOLDOWN = 10;
+    private static final int COOLDOWN = 8;
 
     private static final int MAX_FALL = 3; // Max distance player should fall after phaseshift
     private static final int MAX_RANGE = 6; // Max distance player can phaseshift

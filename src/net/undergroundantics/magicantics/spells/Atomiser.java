@@ -17,7 +17,7 @@ public class Atomiser implements Spell {
 
     private static final String NAME = "Atomiser";
     private static final String DISPLAY_NAME = ChatColor.LIGHT_PURPLE + NAME;
-    private static final long COOLDOWN = 15;
+    private static final long COOLDOWN = 6;
 
     private static final Material[] FORBIDDEN_TYPES = 
         { Material.BEDROCK, Material.BARRIER, Material.ENDER_PORTAL_FRAME,
