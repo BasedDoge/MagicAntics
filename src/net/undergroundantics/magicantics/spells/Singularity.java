@@ -22,6 +22,9 @@ public class Singularity implements Spell {
     private static final String NAME = "Singularity";
     private static final String DISPLAY_NAME = ChatColor.BLACK + NAME;
     private static final long COOLDOWN = 23;
+    private static final int DURATION = 32; //in quarters of seconds
+    private static final int DRAG_RANGE = 16;
+    private static final int EXPULSION_RANGE = 5;
 
     public Singularity(Plugin plugin) {
         this.plugin = plugin;
@@ -61,20 +64,30 @@ public class Singularity implements Spell {
     @Override
     public void onHit(ProjectileHitEvent e) {
         Location loc = e.getEntity().getLocation();
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < DURATION; i++) {
             Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                loc.getWorld().spawnParticle(Particle.PORTAL, loc, 25, 0.25, 0.25, 0.25, 0.5);
+                loc.getWorld().spawnParticle(Particle.PORTAL, loc, 45, 0.5, 0.5, 0.5, 3);
                 loc.getWorld().playSound(loc, Sound.AMBIENT_CAVE, SoundCategory.AMBIENT, 0.5f, 0.0f);
-                for (Entity ent : e.getEntity().getNearbyEntities(13, 13, 13)) {
-                double d0 = loc.getX() - ent.getLocation().getX();
-                double d1 = loc.getY() - ent.getLocation().getY();
-                double d2 = loc.getZ() - ent.getLocation().getZ();
-                double d3 = (double) sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-                Vector v = new Vector(d0 * 0.1D, d1 * 0.1D + (double) sqrt(d3) * 0.08D, d2 * 0.1D);
-                ent.setVelocity(v.multiply(1.5));
+                for (Entity ent : loc.getWorld().getNearbyEntities(loc, 13, 13, 13)) {
+                    ent.setVelocity(drag(loc, ent).multiply(1.5));
                 }
             }, i * 5);
         }
+        Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+            for (Entity ent : loc.getWorld().getNearbyEntities(loc, EXPULSION_RANGE, EXPULSION_RANGE, EXPULSION_RANGE)) {
+                ent.setVelocity(drag(loc, ent).multiply(15));
+            }
+        }, DURATION * 5);
     }
+
+    private Vector drag(Location loc, Entity ent) {
+        double d0 = loc.getX() - ent.getLocation().getX();
+        double d1 = loc.getY() - ent.getLocation().getY();
+        double d2 = loc.getZ() - ent.getLocation().getZ();
+        double d3 = (double) sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+        Vector v = new Vector(d0 * 0.1D, d1 * 0.1D + (double) sqrt(d3) * 0.08D, d2 * 0.1D);
+        return v;
+    }
+
     private final Plugin plugin;
 }
