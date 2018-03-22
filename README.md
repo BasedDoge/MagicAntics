@@ -1,6 +1,6 @@
 # MagicAntics
 
-made for use on [play.undergroundantics.net] (http://www.undergroundantics.net/). Adds spells, scrolls and spellbooks; useful in survival and combat.
+made for use on [undergroundantics] (http://www.undergroundantics.net/). Adds spells, scrolls and spellbooks; useful in survival and combat.
 
 ## Installing
 
