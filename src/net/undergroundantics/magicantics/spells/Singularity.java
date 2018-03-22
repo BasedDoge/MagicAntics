@@ -23,7 +23,7 @@ public class Singularity implements Spell {
     private static final String DISPLAY_NAME = ChatColor.BLACK + NAME;
     private static final long COOLDOWN = 23;
     private static final int DURATION = 32; //in quarters of seconds
-    private static final int DRAG_RANGE = 16;
+    private static final int DRAG_RANGE = 12;
     private static final int EXPULSION_RANGE = 5;
 
     public Singularity(Plugin plugin) {
@@ -68,7 +68,7 @@ public class Singularity implements Spell {
             Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
                 loc.getWorld().spawnParticle(Particle.PORTAL, loc, 45, 0.5, 0.5, 0.5, 3);
                 loc.getWorld().playSound(loc, Sound.AMBIENT_CAVE, SoundCategory.AMBIENT, 0.5f, 0.0f);
-                for (Entity ent : loc.getWorld().getNearbyEntities(loc, 13, 13, 13)) {
+                for (Entity ent : loc.getWorld().getNearbyEntities(loc, DRAG_RANGE, DRAG_RANGE, DRAG_RANGE)) {
                     ent.setVelocity(drag(loc, ent).multiply(1.5));
                 }
             }, i * 5);
