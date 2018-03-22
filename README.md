@@ -36,6 +36,19 @@ with the disadvantages of:
 - a player having to have previously learnt a spell for them to be able to cast it
 - a cooldown on a spell after casting
 
+###Commands
+```
+/SpellTome
+```
+
+```
+/SpellScroll <spell>
+```
+
+```
+/SpellBook <spell>
+```
+
 
 ## Using
 
