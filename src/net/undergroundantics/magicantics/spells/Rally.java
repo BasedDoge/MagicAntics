@@ -8,6 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Banner;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -62,17 +64,21 @@ public class Rally implements Spell {
         marker.setGravity(false);
         PotionEffect speed = new PotionEffect(PotionEffectType.SPEED, 100, 1, true);
         PotionEffect res = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1, true);
+        
+        p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, p.getEyeLocation(), 25, 5, 1, 5, 0);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             List<Entity> ents = p.getNearbyEntities(7, 4, 7);
-            for (Entity ent : getProtectables(ents)) {
+            for (Entity ent : getProtectables(ents, p)) {
+                loc.getWorld().playSound(loc, Sound.BLOCK_NOTE_CHIME, SoundCategory.AMBIENT, 0.5f, 0.0f);
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+                    p.getWorld().spawnParticle(Particle.CRIT_MAGIC, ent.getLocation().add(0, 1, 0), 3, 0.5, 0.5, 0.5, 0.1);
                     res.apply((LivingEntity) ent);
                     speed.apply((LivingEntity) ent);
                 }, i * 10);
             }
         }
-        
+
         marker.setHelmet(new ItemStack(Material.BANNER, 1));
         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
             marker.remove();
@@ -80,19 +86,15 @@ public class Rally implements Spell {
         return true;
     }
 
-    private List<Entity> getProtectables(List<Entity> ents) {
+    private List<Entity> getProtectables(List<Entity> ents, Player player) {
         List<Entity> protectedEnts = new LinkedList();
         for (Entity ent : ents) {
             if (ent instanceof Player) {
                 protectedEnts.add(ent);
             } else if (ent instanceof Tameable) {
                 Tameable an = (Tameable) ent;
-                for (Entity ps : protectedEnts) {
-                    if (ps instanceof Player) {
-                        if (an.getOwner().getUniqueId() == ps.getUniqueId()) {
-                            protectedEnts.add(an);
-                        }
-                    }
+                if (an.getOwner().getUniqueId() == player.getUniqueId()) {
+                    protectedEnts.add(an);
                 }
             }
         }
