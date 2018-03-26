@@ -82,7 +82,7 @@ public class Singularity implements Spell {
             Collection<Entity> ents = loc.getWorld().getNearbyEntities(loc, EXPULSION_RANGE, EXPULSION_RANGE, EXPULSION_RANGE);
             for (Entity ent : ents) {
                 if (ent != shooter){
-                    ent.setVelocity(drag(loc, ent).multiply(ents.size()));
+                    ent.setVelocity(drag(loc, ent).multiply(15));
                 }
             }
         }, DURATION * 5);
