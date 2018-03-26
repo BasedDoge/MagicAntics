@@ -70,7 +70,7 @@ public class Rally implements Spell {
 
         p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, p.getEyeLocation(), 25, 5, 1, 5, 0);
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             List<Entity> ents = marker.getNearbyEntities(7, 4, 7);
             List<Entity> protectedEnts = getProtectables(ents, p);
             for (Entity ent : ents) {
@@ -89,7 +89,7 @@ public class Rally implements Spell {
         marker.setHelmet(new ItemStack(Material.BANNER, 1));
         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
             marker.remove();
-        }, 200);
+        }, 400);
         return true;
     }
 
