@@ -5,6 +5,7 @@ import java.util.List;
 import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -61,20 +62,26 @@ public class Rally implements Spell {
         marker.setInvulnerable(true);
         marker.setMarker(true);
         marker.setVisible(false);
+        marker.setGlowing(true);
         marker.setGravity(false);
-        PotionEffect speed = new PotionEffect(PotionEffectType.SPEED, 100, 1, true);
-        PotionEffect res = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1, true);
-        
+        p.addPassenger(marker);
+        PotionEffect speed = new PotionEffect(PotionEffectType.SPEED, 110, 0, true);
+        PotionEffect res = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 110, 0, true);
+
         p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, p.getEyeLocation(), 25, 5, 1, 5, 0);
 
         for (int i = 0; i < 20; i++) {
-            List<Entity> ents = p.getNearbyEntities(7, 4, 7);
-            for (Entity ent : getProtectables(ents, p)) {
+            List<Entity> ents = marker.getNearbyEntities(7, 4, 7);
+            List<Entity> protectedEnts = getProtectables(ents, p);
+            for (Entity ent : ents) {
                 loc.getWorld().playSound(loc, Sound.BLOCK_NOTE_CHIME, SoundCategory.AMBIENT, 0.5f, 0.0f);
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                    p.getWorld().spawnParticle(Particle.CRIT_MAGIC, ent.getLocation().add(0, 1, 0), 3, 0.5, 0.5, 0.5, 0.1);
-                    res.apply((LivingEntity) ent);
-                    speed.apply((LivingEntity) ent);
+                    if (protectedEnts.contains(ent)) {
+                        marker.getWorld().spawnParticle(Particle.CRIT_MAGIC, ent.getLocation().add(0, 1, 0), 3, 0.5, 0.5, 0.5, 0.1);
+                        res.apply((LivingEntity) ent);
+                        res.apply((LivingEntity) p);
+                        speed.apply((LivingEntity) p);
+                    }
                 }, i * 10);
             }
         }
