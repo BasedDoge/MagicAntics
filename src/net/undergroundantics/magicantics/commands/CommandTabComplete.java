@@ -21,12 +21,16 @@ public class CommandTabComplete implements TabCompleter {
         if (cmd.getName().equalsIgnoreCase("spellscroll")) {
             List<String> spells = new LinkedList<>();
             for (Spell spell : plugin.getSpells())
-                spells.add(spell.getName());
+                if (spell.getName().toLowerCase().startsWith(args[0].toLowerCase())){
+                    spells.add(spell.getName());
+                }
             return spells;
         } else if (cmd.getName().equalsIgnoreCase("spellbook")) {
             List<String> spells = new LinkedList<>();
             for (Spell spell : plugin.getLearnableSpells())
-                spells.add(spell.getName());
+                if (spell.getName().toLowerCase().startsWith(args[0].toLowerCase())){
+                    spells.add(spell.getName());
+                }
             return spells;
         }
         return null;        
