@@ -1,6 +1,7 @@
 package net.undergroundantics.magicantics.spells;
 
 import static java.lang.Math.sqrt;
+import java.util.Collection;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
 public class Singularity implements Spell {
@@ -63,19 +65,25 @@ public class Singularity implements Spell {
 
     @Override
     public void onHit(ProjectileHitEvent e) {
+        ProjectileSource shooter = e.getEntity().getShooter();
         Location loc = e.getEntity().getLocation();
         for (int i = 0; i < DURATION; i++) {
             Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
                 loc.getWorld().spawnParticle(Particle.PORTAL, loc, 45, 0.5, 0.5, 0.5, 3);
                 loc.getWorld().playSound(loc, Sound.AMBIENT_CAVE, SoundCategory.AMBIENT, 0.5f, 0.0f);
                 for (Entity ent : loc.getWorld().getNearbyEntities(loc, DRAG_RANGE, DRAG_RANGE, DRAG_RANGE)) {
-                    ent.setVelocity(drag(loc, ent).multiply(1.5));
+                    if (ent != shooter){
+                        ent.setVelocity(drag(loc, ent).multiply(1.5));
+                    }
                 }
             }, i * 5);
         }
         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-            for (Entity ent : loc.getWorld().getNearbyEntities(loc, EXPULSION_RANGE, EXPULSION_RANGE, EXPULSION_RANGE)) {
-                ent.setVelocity(drag(loc, ent).multiply(15));
+            Collection<Entity> ents = loc.getWorld().getNearbyEntities(loc, EXPULSION_RANGE, EXPULSION_RANGE, EXPULSION_RANGE);
+            for (Entity ent : ents) {
+                if (ent != shooter){
+                    ent.setVelocity(drag(loc, ent).multiply(ents.size()));
+                }
             }
         }, DURATION * 5);
     }
