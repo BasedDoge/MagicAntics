@@ -59,7 +59,7 @@ public class MagicAntics extends JavaPlugin {
 
     public Spell getSpellFromName(String name) {
         for (Spell spell : spells) {
-            if (spell.getName().equals(name)) {
+            if (spell.getName().equalsIgnoreCase(name)) {
                 return spell;
             }
         }
