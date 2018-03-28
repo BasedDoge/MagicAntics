@@ -80,7 +80,7 @@ public class SpellSelecting implements Listener {
         return plugin.getSpellFromDisplayName(book.getItemMeta().getLore().get(0));
     }
     
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onCloseSpellTome(InventoryCloseEvent e) {
         if (isSpellInventory(e.getInventory())) {
             List<Spell> spells = new LinkedList<>();
@@ -121,7 +121,7 @@ public class SpellSelecting implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onOpenSpellTome(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE) {
             Player p = e.getPlayer();
