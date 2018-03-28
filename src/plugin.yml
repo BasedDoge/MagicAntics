@@ -1,20 +1,20 @@
 name: MagicAntics
 main: net.undergroundantics.magicantics.plugin.MagicAntics
-version: 0.2
+version: 0.3
 authors: [Isaac, Dxyze]
 commands:
    spellscroll:
       description: Gives spell scroll.
-      usage: /spellscroll <spell> [Use tab completion]
+      usage: /spellscroll <spell> [player]
       permission: magicantics.spawn.scroll
-      permission-message: You don't have permission to give yourself items.
+      permission-message: You don't have permission to do this.
    spellbook:
       description: Gives spell book.
-      usage: /spellbook <spell> [Use tab completion]
+      usage: /spellbook <spell> [player]
       permission: magicantics.spawn.book
-      permission-message: You don't have permission to give yourself items.
+      permission-message: You don't have permission to do this.
    spelltome:
       description: Gives spell tome.
-      usage: /spelltome
+      usage: /spelltome [player]
       permission: magicantics.spawn.tome
-      permission-message: You don't have permission to give yourself items.
+      permission-message: You don't have permission to do this.
