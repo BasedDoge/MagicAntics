@@ -27,6 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.undergroundantics.magicantics.spells.*;
 import net.undergroundantics.magicantics.commands.*;
+import org.bukkit.command.CommandSender;
 
 public class MagicAntics extends JavaPlugin {
  
@@ -90,8 +91,8 @@ public class MagicAntics extends JavaPlugin {
     }
     
     
-    public static void sendMessage(Player p, String msg) {
-        p.sendMessage(ChatColor.DARK_GRAY + ""
+    public static void sendMessage(CommandSender sender, String msg) {
+        sender.sendMessage(ChatColor.DARK_GRAY + ""
                 + ""
                 + "[" + ChatColor.RESET 
                 + ChatColor.GOLD +
@@ -113,6 +114,7 @@ public class MagicAntics extends JavaPlugin {
         getCommand("spelltome").setExecutor(ce);
         getCommand("spellbook").setTabCompleter(tc);
         getCommand("spellscroll").setTabCompleter(tc);
+        getCommand("spellknowledge").setExecutor(ce);
         this.registerSpellTomeRecipe();
         readPlayerKnowledge();
     }
@@ -156,16 +158,27 @@ public class MagicAntics extends JavaPlugin {
         }
         return spells;
     }
-
+    
     public boolean hasLearntSpell(Player p, Spell spell) {
         return learntSpells.containsKey(p.getUniqueId()) && learntSpells.get(p.getUniqueId()).contains(spell.getName());
     }
     
+    public void setLearntSpells(Player p, List<Spell> spells) {
+        Set<String> spellNames = new TreeSet<>();
+        for (Spell spell : spells) {
+            spellNames.add(spell.getName());
+        }
+        learntSpells.put(p.getUniqueId(), spellNames);
+        writePlayerKnowledge();
+    }
+    
     public void learnSpell(Player p, Spell spell) {
+        setLearntSpells(p, Arrays.asList(spell));
+    }
+    
+    public void unlearnSpell(Player p, Spell spell) {
         UUID key = p.getUniqueId();
-        if ( ! learntSpells.containsKey(key))
-            learntSpells.put(key, new TreeSet<>());
-        if ( learntSpells.get(p.getUniqueId()).add(spell.getName()) )
+        if ( learntSpells.containsKey(key) && learntSpells.get(key).remove(spell.getName()))
             writePlayerKnowledge();
     }
 

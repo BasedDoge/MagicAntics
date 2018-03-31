@@ -18,3 +18,8 @@ commands:
       usage: /spelltome [player]
       permission: magicantics.spawn.tome
       permission-message: You don't have permission to do this.
+   spellknowledge:
+      description: Adds or removes the players knowledge of spells
+      usage: /spellknowledge <player> [clear | add <spell> | remove <spell>]
+      permission: magicantics.admin
+      permission-message: You don't have permission to do this.
