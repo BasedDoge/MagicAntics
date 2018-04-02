@@ -173,7 +173,11 @@ public class MagicAntics extends JavaPlugin {
     }
     
     public void learnSpell(Player p, Spell spell) {
-        setLearntSpells(p, Arrays.asList(spell));
+        UUID key = p.getUniqueId();
+        if ( ! learntSpells.containsKey(key) )
+            learntSpells.put(key, new TreeSet<>());
+        if ( learntSpells.get(key).add(spell.getName()) )
+            writePlayerKnowledge();
     }
     
     public void unlearnSpell(Player p, Spell spell) {

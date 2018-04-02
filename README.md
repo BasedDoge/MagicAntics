@@ -38,15 +38,19 @@ with the disadvantages of:
 
 ### Commands
 ```
-/SpellTome
+/SpellTome [player]
 ```
 
 ```
-/SpellScroll <spell>
+/SpellScroll <spell> [player]
 ```
 
 ```
-/SpellBook <spell>
+/SpellBook <spell> [player]
+```
+
+```
+/spellknowledge <player> [clear | add <spell> | remove <spell>]
 ```
 
 
@@ -61,9 +65,12 @@ with the disadvantages of:
 
 * **Dxyze** - *Co-Developer*
 
-[contributors](https://github.com/BasedDoge/MagicAntics/graphs/contributors).
+* [Contributors](https://github.com/BasedDoge/MagicAntics/graphs/contributors).
 
 ## License
+[Attribution - NonCommercial 3.0 Australia](https://creativecommons.org/licenses/by-nc/3.0/au/legalcode)
 
-!!!TBA!!!
+THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENCE ("LICENCE"). THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORISED UNDER THIS LICENCE OR COPYRIGHT LAW IS PROHIBITED.
+
+BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENCE. THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
 
