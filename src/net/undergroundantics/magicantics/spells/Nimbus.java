@@ -49,7 +49,7 @@ public class Nimbus implements Spell {
                 Location cloud = new Location(cloudSeed.getWorld(), p.getLocation().getX() + x, p.getLocation().getY() - 1, p.getLocation().getZ() + z);
                 if ( Math.pow(cloud.getX() - p.getLocation().getX(), 2) + Math.pow(cloud.getZ() - p.getLocation().getZ(), 2) <= Math.pow(CLOUD_RADIUS, 2) ) {
                     if (cloud.getBlock().getType() == Material.AIR) {
-                        cloud.getBlock().setType(Material.SNOW_BLOCK);
+                        cloud.getBlock().setType(Material.STAINED_GLASS);
                         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
                             cloud.getBlock().setType(Material.AIR);
                             cloud.getWorld().spawnParticle(Particle.CLOUD, cloud, 4, 0.25, 0.25, 0.25, 0.2);
