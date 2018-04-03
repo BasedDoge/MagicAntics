@@ -5,6 +5,7 @@ import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
@@ -57,7 +58,8 @@ public class Familiar implements Spell {
 
     @Override
     public void onHit(ProjectileHitEvent e) {
-        Wolf wolf = (Wolf) e.getEntity().getWorld().spawnEntity(e.getHitEntity().getLocation(), EntityType.WOLF);
+        Location spawnLoc = (e.getHitBlock() == null) ? e.getHitEntity().getLocation() : e.getHitBlock().getLocation().add(0, 1, 0);
+        Wolf wolf = (Wolf) e.getEntity().getWorld().spawnEntity(spawnLoc, EntityType.WOLF);
         wolf.setOwner((Player) e.getEntity().getShooter());
         wolf.setHealth(20);
         wolf.setCustomName(ChatColor.GREEN + "Wolf Familiar");
