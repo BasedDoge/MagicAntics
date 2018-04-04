@@ -27,7 +27,6 @@ public class CommandTabComplete implements TabCompleter {
             } else if (args.length == 2) {
                 return playerNames(args[1]);
             }
-            List<String> spells = new LinkedList<>();
         } else if (cmd.getName().equalsIgnoreCase("spelltome")) {
             if (args.length == 1) {
                 return playerNames(args[0]);
@@ -66,7 +65,6 @@ public class CommandTabComplete implements TabCompleter {
     }
     
     private List<String> knowledgeArgs(String prefix){
-        
         List<String> args = new LinkedList<>();
         for (String s : kArgs){
             if (s.toLowerCase().startsWith(prefix.toLowerCase())) {
