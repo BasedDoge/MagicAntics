@@ -58,7 +58,7 @@ public class Familiar implements Spell {
 
     @Override
     public void onHit(ProjectileHitEvent e) {
-        Location spawnLoc = (e.getHitEntity() == null) ? e.getHitEntity().getLocation() : e.getHitBlock().getLocation().add(0, 1, 0);
+        Location spawnLoc = (e.getHitBlock() == null) ? e.getHitEntity().getLocation() : e.getHitBlock().getLocation().add(0, 1, 0);
         Wolf wolf = (Wolf) e.getEntity().getWorld().spawnEntity(spawnLoc, EntityType.WOLF);
         wolf.setOwner((Player) e.getEntity().getShooter());
         wolf.setHealth(20);
@@ -77,3 +77,4 @@ public class Familiar implements Spell {
 
     private final Plugin plugin;
 }
+
