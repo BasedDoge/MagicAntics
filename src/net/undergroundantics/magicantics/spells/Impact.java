@@ -4,9 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import net.undergroundantics.magicantics.plugin.Spell;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -27,25 +32,33 @@ public class Impact implements Spell {
         boolean castSuccess = true;
         boolean isGround = false;
         int height = 0;
+                        
         while (isGround == false) {
             if (p.getLocation().subtract(0, height, 0).getBlock().getType() == Material.AIR && height < 255) {
                 height++;
             } else {
                 isGround = true;
+                Vector v = new Vector(0, -(height / 2), 0);
+                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 2.0f);
                 SpectralArrow arrow = p.launchProjectile(SpectralArrow.class);
+                arrow.setVelocity(new Vector(0, 0, 0));
+                arrow.setPickupStatus(Arrow.PickupStatus.DISALLOWED);
+                arrow.setBounce(true);
+                arrow.addPassenger(p);
                 arrow.setShooter(p);
                 arrow.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
                 p.setFallDistance(-((height / 5) * 4));
-                arrow.addPassenger(p);
-                arrow.setVelocity(new Vector(0, -(height / 2), 0));
+                    arrow.setVelocity(v);
             }
         }
+                
         return castSuccess;
     }
 
     @Override
     public void onHit(ProjectileHitEvent e) {
         Location loc = (e.getHitEntity() == null) ? e.getHitBlock().getLocation() : e.getHitEntity().getLocation();
+        loc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, loc.add(0, 1, 0), 8, 2, 0.25, 2, 0.2);
         e.getEntity().remove();
         List<Entity> localMobsImpact = new LinkedList();
         for (Entity ent : loc.getWorld().getNearbyEntities(loc, 4, 2, 4)) {
@@ -55,6 +68,7 @@ public class Impact implements Spell {
         }
         for (Entity mob : localMobsImpact) {
             mob.setVelocity(mob.getVelocity().add(new Vector(0, 1, 0)));
+            mob.setFallDistance(8);
         }
     }
 
