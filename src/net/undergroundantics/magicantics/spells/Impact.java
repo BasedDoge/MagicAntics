@@ -39,7 +39,6 @@ public class Impact implements Spell {
             } else {
                 isGround = true;
                 Vector v = new Vector(0, -(height / 2), 0);
-                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 0f);
                 SpectralArrow arrow = p.launchProjectile(SpectralArrow.class);
                 arrow.setVelocity(new Vector(0, 0, 0));
                 arrow.setPickupStatus(Arrow.PickupStatus.DISALLOWED);
@@ -58,6 +57,7 @@ public class Impact implements Spell {
     @Override
     public void onHit(ProjectileHitEvent e) {
         Location loc = (e.getHitEntity() == null) ? e.getHitBlock().getLocation() : e.getHitEntity().getLocation();
+        loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 0f);
         loc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, loc.add(0, 1, 0), 8, 2, 0.25, 2, 0.2);
         e.getEntity().remove();
         List<Entity> localMobsImpact = new LinkedList();
