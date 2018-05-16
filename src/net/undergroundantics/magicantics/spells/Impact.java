@@ -22,24 +22,24 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public class Impact implements Spell {
-
+    
     private static final String NAME = "Imapact";
     private static final String DISPLAY_NAME = ChatColor.YELLOW + NAME;
     private static final long COOLDOWN = 18;
-
+    
     @Override
     public boolean cast(Player p) {
         boolean castSuccess = true;
         boolean isGround = false;
         int height = 0;
-                        
+        
         while (isGround == false) {
             if (p.getLocation().subtract(0, height, 0).getBlock().getType() == Material.AIR && height < 255) {
                 height++;
             } else {
                 isGround = true;
                 Vector v = new Vector(0, -(height / 2), 0);
-                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 2.0f);
+                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 0f);
                 SpectralArrow arrow = p.launchProjectile(SpectralArrow.class);
                 arrow.setVelocity(new Vector(0, 0, 0));
                 arrow.setPickupStatus(Arrow.PickupStatus.DISALLOWED);
@@ -48,13 +48,13 @@ public class Impact implements Spell {
                 arrow.setShooter(p);
                 arrow.setMetadata(NAME, new FixedMetadataValue(plugin, MagicAntics.NAME));
                 p.setFallDistance(-((height / 5) * 4));
-                    arrow.setVelocity(v);
+                arrow.setVelocity(v);
             }
         }
-                
+        
         return castSuccess;
     }
-
+    
     @Override
     public void onHit(ProjectileHitEvent e) {
         Location loc = (e.getHitEntity() == null) ? e.getHitBlock().getLocation() : e.getHitEntity().getLocation();
@@ -68,33 +68,35 @@ public class Impact implements Spell {
         }
         for (Entity mob : localMobsImpact) {
             mob.setVelocity(mob.getVelocity().add(new Vector(0, 1, 0)));
-            mob.setFallDistance(8);
+            
+            mob.setFallDistance((e.getEntity().getFallDistance() / 8) + 10);
+            mob.setGlowing(false);
         }
     }
-
+    
     @Override
     public String getName() {
         return NAME;
     }
-
+    
     @Override
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
-
+    
     @Override
     public long getCooldown() {
         return COOLDOWN;
     }
-
+    
     @Override
     public boolean isLearnable() {
         return true;
     }
-
+    
     public Impact(Plugin plugin) {
         this.plugin = plugin;
     }
-
+    
     private final Plugin plugin;
 }
