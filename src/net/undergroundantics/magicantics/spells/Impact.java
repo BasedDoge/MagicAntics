@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import net.undergroundantics.magicantics.plugin.MagicAntics;
 import net.undergroundantics.magicantics.plugin.Spell;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,7 +22,7 @@ import org.bukkit.util.Vector;
 
 public class Impact implements Spell {
     
-    private static final String NAME = "Imapact";
+    private static final String NAME = "Impact";
     private static final String DISPLAY_NAME = ChatColor.YELLOW + NAME;
     private static final long COOLDOWN = 18;
     
@@ -67,9 +66,10 @@ public class Impact implements Spell {
             }
         }
         for (Entity mob : localMobsImpact) {
+            
             mob.setVelocity(mob.getVelocity().add(new Vector(0, 1, 0)));
             
-            mob.setFallDistance((e.getEntity().getFallDistance() / 8) + 10);
+            mob.setFallDistance((e.getEntity().getFallDistance() / 8) + 1);
             mob.setGlowing(false);
         }
     }
