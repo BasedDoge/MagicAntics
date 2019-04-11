@@ -2,6 +2,7 @@ package net.undergroundantics.magicantics.spells;
 
 import java.util.LinkedList;
 import java.util.List;
+import net.undergroundantics.magicantics.plugin.MagicAntics;
 import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,7 +54,7 @@ public class Rally implements Spell {
     }
 
     @Override
-    public boolean cast(Player p) {
+    public boolean cast(Player p) {/*
         Location loc = p.getLocation();
         Banner b;
         loc.setY(loc.getY() - 1.85);
@@ -88,7 +89,8 @@ public class Rally implements Spell {
         marker.setHelmet(new ItemStack(Material.GREEN_BANNER, 1));
         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
             marker.remove();
-        }, 400);
+        }, 400); */
+        MagicAntics.sendMessage(p, "The Rally spell has been temporarily disabled by Developers for rework.");
         return true;
     }
 
