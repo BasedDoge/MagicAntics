@@ -1,6 +1,7 @@
 name: MagicAntics
 main: net.undergroundantics.magicantics.plugin.MagicAntics
-version: 0.3
+version: 0.4
+api-version: 1.13
 authors: [Isaac, Dxyze]
 commands:
    spellscroll:
