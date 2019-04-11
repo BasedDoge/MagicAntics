@@ -13,6 +13,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Atomiser implements Spell {
@@ -75,7 +76,7 @@ public class Atomiser implements Spell {
             BlockBreakEvent event = new BlockBreakEvent(block, p);
             Bukkit.getServer().getPluginManager().callEvent(event);
             if ( ! event.isCancelled() ) {
-                block.breakNaturally(null);
+                block.breakNaturally(new ItemStack(Material.DIAMOND_PICKAXE, 1));
                 broken = true;
             }
         }
