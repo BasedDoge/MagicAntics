@@ -3,9 +3,11 @@ package net.undergroundantics.magicantics.spells;
 import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Particle.DustOptions;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
@@ -63,7 +65,8 @@ public class Atomiser implements Spell {
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         for (int i = 0; i <= dist; i++) {
             Location loc = p.getLocation().add(p.getLocation().getDirection().setY(h).normalize().multiply(i));
-            p.getWorld().spawnParticle(Particle.REDSTONE, loc, 0, -0.3, 0, 0.5, 1);
+            DustOptions r = new DustOptions(Color.FUCHSIA, 1);
+            p.getWorld().spawnParticle(Particle.REDSTONE, loc, 0, -0.3, 0, 0.5, 1, r);
         }
        
         boolean broken = false;
