@@ -28,7 +28,7 @@ public class SpellCasting implements Listener {
             if ( e.getHand() == EquipmentSlot.HAND ) {
                 Player p = e.getPlayer();
                 if (ItemRules.isSpellTome(item)) {
-                    if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE)
+                    if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENCHANTING_TABLE)
                         return;
 
                     e.setCancelled(true);

@@ -70,7 +70,7 @@ public class Stasis implements Spell {
         if (localMobsStasis.isEmpty()) {
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SILVERFISH_DEATH, SoundCategory.PLAYERS, 0.5f, 2.0f);
         } else {
-            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, SoundCategory.PLAYERS, 0.5f, 2.0f);
             castSuccess = true;
         }
         return castSuccess;
@@ -81,7 +81,7 @@ public class Stasis implements Spell {
         Entity p = e.getEntity();
         PotionEffect stasis = new PotionEffect(PotionEffectType.LEVITATION, 20, 2, true);
         p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10, 1, 1, 1, 0);
-        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
+        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         if (e.getHitEntity() instanceof LivingEntity) {
             for (int i = 0; i < 120; i++) {
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {

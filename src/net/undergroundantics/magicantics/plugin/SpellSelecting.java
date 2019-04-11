@@ -31,8 +31,8 @@ public class SpellSelecting implements Listener {
     private static final ItemStack EMPTY_EQUIP_SLOT;
     private static final ItemStack UNKNOWN_SLOT;
     static {
-        BARRIER_SLOT     = new ItemStack(Material.THIN_GLASS, 1);
-        EMPTY_EQUIP_SLOT = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)13);
+        BARRIER_SLOT     = new ItemStack(Material.GLASS_PANE, 1);
+        EMPTY_EQUIP_SLOT = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1, (short)13);
         UNKNOWN_SLOT     = new ItemStack(Material.BARRIER, 1);
         ItemMeta meta;
         meta = BARRIER_SLOT.getItemMeta();
@@ -123,7 +123,7 @@ public class SpellSelecting implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onOpenSpellTome(PlayerInteractEvent e) {
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE) {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.ENCHANTING_TABLE) {
             Player p = e.getPlayer();
             ItemStack tome = p.getInventory().getItemInMainHand();
             if (ItemRules.isSpellTome(tome)) {

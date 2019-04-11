@@ -58,7 +58,7 @@ public class Phase implements Spell {
                 if (isSafe(trueTarget)) {
                     player.teleport(trueTarget);
                     player.getWorld().spawnParticle(Particle.DRAGON_BREATH, player.getEyeLocation(), 15, 0.5, 1, 0.5, 0.0);
-                    player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 0.0f);
+                    player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 0.0f);
                     return true;
                 }
             } else {

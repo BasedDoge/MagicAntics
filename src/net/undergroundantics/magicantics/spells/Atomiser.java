@@ -20,8 +20,8 @@ public class Atomiser implements Spell {
     private static final long COOLDOWN = 6;
 
     private static final Material[] FORBIDDEN_TYPES = 
-        { Material.BEDROCK, Material.BARRIER, Material.ENDER_PORTAL_FRAME,
-          Material.COMMAND, Material.COMMAND_CHAIN, Material.COMMAND_REPEATING,
+        { Material.BEDROCK, Material.BARRIER, Material.END_PORTAL_FRAME,
+          Material.COMMAND_BLOCK, Material.CHAIN_COMMAND_BLOCK, Material.REPEATING_COMMAND_BLOCK,
           Material.STRUCTURE_BLOCK, Material.STRUCTURE_VOID
         };
 
@@ -60,7 +60,7 @@ public class Atomiser implements Spell {
         double dist = p.getLocation().distance(block.getLocation());
         double h = ((block.getLocation().getY()) - (p.getLocation().getY()) ) / dist;
         
-        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
+        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.5f, 2.0f);
         for (int i = 0; i <= dist; i++) {
             Location loc = p.getLocation().add(p.getLocation().getDirection().setY(h).normalize().multiply(i));
             p.getWorld().spawnParticle(Particle.REDSTONE, loc, 0, -0.3, 0, 0.5, 1);

@@ -56,7 +56,7 @@ public class Impact implements Spell {
     @Override
     public void onHit(ProjectileHitEvent e) {
         Location loc = (e.getHitEntity() == null) ? e.getHitBlock().getLocation() : e.getHitEntity().getLocation();
-        loc.getWorld().playSound(loc, Sound.ENTITY_ENDERDRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 0f);
+        loc.getWorld().playSound(loc, Sound.ENTITY_ENDER_DRAGON_FLAP, SoundCategory.PLAYERS, 0.5f, 0f);
         loc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, loc.add(0, 1, 0), 8, 2, 0.25, 2, 0.2);
         e.getEntity().remove();
         List<Entity> localMobsImpact = new LinkedList();

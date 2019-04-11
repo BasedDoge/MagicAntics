@@ -5,7 +5,6 @@ import java.util.List;
 import net.undergroundantics.magicantics.plugin.Spell;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -74,7 +73,7 @@ public class Rally implements Spell {
             List<Entity> ents = marker.getNearbyEntities(7, 4, 7);
             List<Entity> protectedEnts = getProtectables(ents, p);
             for (Entity ent : ents) {
-                loc.getWorld().playSound(loc, Sound.BLOCK_NOTE_CHIME, SoundCategory.AMBIENT, 0.5f, 0.0f);
+                loc.getWorld().playSound(loc, Sound.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.AMBIENT, 0.5f, 0.0f);
                 Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
                     if (protectedEnts.contains(ent)) {
                         marker.getWorld().spawnParticle(Particle.CRIT_MAGIC, ent.getLocation().add(0, 1, 0), 3, 0.5, 0.5, 0.5, 0.1);
@@ -86,7 +85,7 @@ public class Rally implements Spell {
             }
         }
 
-        marker.setHelmet(new ItemStack(Material.BANNER, 1));
+        marker.setHelmet(new ItemStack(Material.GREEN_BANNER, 1));
         Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
             marker.remove();
         }, 400);
